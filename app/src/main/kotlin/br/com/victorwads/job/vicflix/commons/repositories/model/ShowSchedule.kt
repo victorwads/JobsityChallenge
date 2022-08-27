@@ -1,14 +1,10 @@
-package br.com.victorwads.job.vicflix.features.listing.repository.apimodel
+package br.com.victorwads.job.vicflix.commons.repositories.model
 
 import com.google.gson.annotations.SerializedName
 
 data class ShowSchedule(
     @SerializedName("time")
     val time: String,
-//"time": "22:00"
     @SerializedName("days")
-    val days: String,
-//"days": [
-//  "Thursday"
-//]
+    val days: List<String>,
 )

@@ -1,6 +1,6 @@
 package br.com.victorwads.job.vicflix.features.listing.repository
 
-import br.com.victorwads.job.vicflix.features.listing.repository.apimodel.Show
+import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

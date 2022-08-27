@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.features.listing.repository.apimodel
+package br.com.victorwads.job.vicflix.commons.repositories.model
 
 import com.google.gson.annotations.SerializedName
 
