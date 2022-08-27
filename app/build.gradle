@@ -30,11 +30,19 @@ android {
         jvmTarget = '1.8'
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     def kotlinDir = "src/main/kotlin/"
+    def featuresDir = kotlinDir+ "br/com/victorwads/job/vicflix/features/"
 
     sourceSets {
         main {
             java.srcDirs += kotlinDir
+            res.srcDirs += [
+                    featuresDir + "listing/res/"
+            ]
         }
     }
 }
