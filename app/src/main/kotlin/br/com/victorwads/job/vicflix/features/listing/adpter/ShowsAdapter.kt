@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
+import com.squareup.picasso.Picasso
 
 class ShowsAdapter(
     private val inflater: LayoutInflater,
@@ -34,6 +35,9 @@ class ShowsAdapter(
 
         fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
             labelName.text = show.name
+            show.image?.medium?.let {
+                Picasso.get().load(it).into(poster)
+            }
             root.setOnClickListener {
                 onSelectShow(show)
             }
