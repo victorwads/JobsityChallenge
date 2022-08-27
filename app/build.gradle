@@ -29,6 +29,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    def kotlinDir = "src/main/kotlin/"
+
+    sourceSets {
+        main {
+            java.srcDirs += kotlinDir
+        }
+    }
 }
 
 dependencies {
