@@ -35,6 +35,7 @@ class ShowDetailsActivity : BaseActivity() {
     }
 
     private fun bindView() {
+        title = showShortDetails?.name
         setContentView(recyclerView)
         SingleLayoutAdapter(
             {
@@ -57,7 +58,9 @@ class ShowDetailsActivity : BaseActivity() {
             summary.text = show.summary?.let { Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT) }
                 ?: getString(R.string.no_info)
 
-            show.image?.original?.let { url -> Picasso.get().load(url).into(poster) }
+            show.image?.original?.let { url ->
+                Picasso.get().load(url).fit().centerCrop().into(poster)
+            }
             show.schedule?.let {
                 schedule.text = getString(
                     R.string.showdetails_label_schedule_description,

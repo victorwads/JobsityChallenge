@@ -44,7 +44,7 @@ class ShowsAdapter(
 
         fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
             labelName.text = show.name
-            show.image?.medium?.let { Picasso.get().load(it).into(poster) }
+            show.image?.medium?.let { Picasso.get().load(it).fit().centerCrop().into(poster) }
 
             root.apply {
                 configAccessibility(R.string.listing_select_action_description)
