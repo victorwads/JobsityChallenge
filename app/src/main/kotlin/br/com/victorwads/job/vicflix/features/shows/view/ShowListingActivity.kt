@@ -32,7 +32,7 @@ class ShowListingActivity : BaseActivity() {
         layout.shows.adapter = showsAdapter
         layout.shows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (recyclerView.canScrollVertically(1) && shouldAutoLoad()) {
+                if (!recyclerView.canScrollVertically(1) && shouldAutoLoad()) {
                     viewModel.loadMore()
                 }
             }
