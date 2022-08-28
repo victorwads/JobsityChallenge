@@ -10,7 +10,7 @@ data class Season(
     @SerializedName("url") val url: String,
     @SerializedName("number") val number: Int,
     @SerializedName("name") val name: String?,
-    @SerializedName("episodeOrder") val size: Int,
+    @SerializedName("episodeOrder") val size: Int?,
     @SerializedName("image") val image: APIImage?,
     @SerializedName("summary") val summary: String?,
 ) : Parcelable

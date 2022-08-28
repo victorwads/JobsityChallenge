@@ -45,7 +45,7 @@ class ShowSeasonEpisodesAdapter(
     override fun getItemViewType(position: Int): Int = if (position == SEASON_POSITION)
         SEASON_TYPE else EPISODE_TYPE
 
-    override fun getItemCount(): Int = (episodes?.size ?: season.size) + HEADER_OFFSET
+    override fun getItemCount(): Int = (episodes?.size ?: season.size ?: 0) + HEADER_OFFSET
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         if (viewType == SEASON_TYPE) {
