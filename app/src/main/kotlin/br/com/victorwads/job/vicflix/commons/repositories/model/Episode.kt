@@ -10,7 +10,7 @@ data class Episode(
     @SerializedName("url") val url: String,
     @SerializedName("season") val season: Int,
     @SerializedName("number") val number: Int,
-    @SerializedName("name") val name: String,
+    @SerializedName("name") val name: String?,
     @SerializedName("type") val type: String?,
     @SerializedName("image") val image: APIImage?,
     @SerializedName("summary") val summary: String?,

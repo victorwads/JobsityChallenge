@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/poster"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShowDetailsCoverOverlay"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        android:id="@+id/season"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_padding"
+        app:label="@string/showdetails_label_season"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/poster"
+        tools:text="@tools:sample/full_names" />
+
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        android:id="@+id/number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="@string/showdetails_label_number"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@id/season"
+        app:layout_constraintTop_toBottomOf="@id/season"
+        tools:text="@tools:sample/full_names" />
+
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        android:id="@+id/summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:label="@string/showdetails_label_summary"
+        app:layout_constraintLeft_toLeftOf="@id/number"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/number"
+        tools:text="@tools:sample/full_names" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

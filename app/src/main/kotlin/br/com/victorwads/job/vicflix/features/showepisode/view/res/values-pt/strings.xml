@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="showdetails_label_season">Temporada:</string>
+    <string name="showdetails_label_number">Número do episódio:</string>
+</resources>

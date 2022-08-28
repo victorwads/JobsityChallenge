@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
+import br.com.victorwads.job.vicflix.commons.view.Navigation
 import br.com.victorwads.job.vicflix.databinding.ShowdetailsEpisodeItemBinding
 import br.com.victorwads.job.vicflix.databinding.ShowdetailsSeasonItemBinding
 import br.com.victorwads.job.vicflix.features.showdetails.viewModel.ShowDetailsViewModel
@@ -17,6 +18,7 @@ import br.com.victorwads.job.vicflix.features.showdetails.viewModel.ShowSeasonSt
 class ShowSeasonEpisodesAdapter(
     private val season: Season,
     private val inflater: LayoutInflater,
+    private val navigation: Navigation,
     lifecycleOwner: LifecycleOwner,
     viewModel: ShowDetailsViewModel,
 ) : RecyclerView.Adapter<ShowSeasonEpisodesAdapter.Holder>() {
@@ -68,7 +70,7 @@ class ShowSeasonEpisodesAdapter(
         when (holder) {
             is SeasonHolder -> holder.bind(season)
             is EpisodeHolder -> episodes?.getOrNull(position - HEADER_OFFSET)
-                ?.let { holder.bind(season, it, position) } ?: holder.bind(position)
+                ?.let { holder.bind(season, it, position, navigation) } ?: holder.bind(position)
         }
     }
 

@@ -84,7 +84,7 @@ class ShowDetailsActivity : BaseActivity() {
         hideLoading()
         seasons.forEach {
             adapters.addAdapter(
-                ShowSeasonEpisodesAdapter(it, layoutInflater, this, viewModel)
+                ShowSeasonEpisodesAdapter(it, layoutInflater, navigation, this, viewModel)
             )
         }
         adapters.notifyItemRangeInserted(1, seasons.size)
