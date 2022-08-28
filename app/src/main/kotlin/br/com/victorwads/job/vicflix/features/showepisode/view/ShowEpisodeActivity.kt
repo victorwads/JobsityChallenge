@@ -7,7 +7,6 @@ import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.EpisodeActivityBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import java.lang.Exception
 
 class ShowEpisodeActivity : BaseActivity(), Callback {
 

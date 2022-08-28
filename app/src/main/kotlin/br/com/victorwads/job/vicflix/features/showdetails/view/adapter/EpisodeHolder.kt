@@ -1,6 +1,7 @@
 package br.com.victorwads.job.vicflix.features.showdetails.view.adapter
 
 import br.com.victorwads.job.vicflix.R
+import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.view.Navigation
@@ -20,6 +21,11 @@ class EpisodeHolder(
                 R.string.showdetails_episode_name,
                 season.number, number, episode.name
             )
+            labelName.contentDescription = getString(
+                R.string.showdetails_episode_name_description,
+                season.number, number, episode.name
+            )
+            labelName.configAccessibility(R.string.showdetails_episode_action_description)
         }
         shimmer.hideShimmer()
     }

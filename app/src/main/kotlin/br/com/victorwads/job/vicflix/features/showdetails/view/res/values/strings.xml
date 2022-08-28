@@ -11,5 +11,7 @@
     <string name="showdetails_season_name">Season %1$d - %2$s</string>
     <string name="showdetails_episode">Episode %1$d</string>
     <string name="showdetails_episode_name">S%1$dE%2$d - %3$s</string>
+    <string name="showdetails_episode_name_description">Season %1$d Episode %2$d, named: %3$s</string>
     <string name="showdetails_name_loading" translatable="false">...</string>
+    <string name="showdetails_episode_action_description">view episode details</string>
 </resources>

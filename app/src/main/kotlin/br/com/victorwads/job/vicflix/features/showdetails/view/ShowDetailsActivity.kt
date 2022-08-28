@@ -2,7 +2,6 @@ package br.com.victorwads.job.vicflix.features.showdetails.view
 
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import androidx.recyclerview.widget.ConcatAdapter
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
