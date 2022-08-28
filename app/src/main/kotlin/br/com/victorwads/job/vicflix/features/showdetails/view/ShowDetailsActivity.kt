@@ -1,6 +1,7 @@
 package br.com.victorwads.job.vicflix.features.showdetails.view
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.ConcatAdapter
 import br.com.victorwads.job.vicflix.R
@@ -55,12 +56,14 @@ class ShowDetailsActivity : BaseActivity() {
             summary.text = show.summary
 
             show.image?.original?.let { url ->
-                Picasso.get().load(url).fit().centerCrop().into(poster)
+                Picasso.get().load(url).fit().centerCrop(Gravity.TOP).into(poster)
             }
             show.schedule?.let {
-                schedule.text = getString(
+                schedule.text = if (it.time.isNullOrEmpty() && it.days.isNullOrEmpty()) {
+                    null
+                } else getString(
                     R.string.showdetails_label_schedule_description,
-                    it.days.joinToString(), it.time
+                    it.days?.joinToString(), it.time
                 )
             }
         }

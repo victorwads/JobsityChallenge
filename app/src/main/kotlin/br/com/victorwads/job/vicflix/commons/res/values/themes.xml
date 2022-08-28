@@ -11,6 +11,18 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!-- Customize your theme here. --> q
     </style>
+
+    <style name="DetailsTheme" parent="Theme.VicFlix">
+        <item name="actionBarStyle">@style/MyTheme.ActionBar</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="MyTheme.ActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="elevation">0dp</item>
+        <item name="background">@color/semi_transparent</item>
+    </style>
+
 </resources>

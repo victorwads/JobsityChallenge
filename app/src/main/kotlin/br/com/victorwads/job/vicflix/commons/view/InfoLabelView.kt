@@ -11,21 +11,16 @@ import androidx.appcompat.widget.AppCompatTextView
 import br.com.victorwads.job.vicflix.R
 
 
-class InfoLabelView constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int?,
-    var autofill: Boolean = false,
-    var label: String = EMPTY_STRING
-) : AppCompatTextView(context, attrs, defStyleAttr ?: 0) {
+class InfoLabelView : AppCompatTextView {
 
+    var autofill: Boolean = false
+    var label: String = EMPTY_STRING
 
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int?)
-            : this(context, attrs, defStyleAttr, false) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(context, attrs)
     }
 
@@ -48,10 +43,14 @@ class InfoLabelView constructor(
 
     private fun getTextFinalValue(): String = text.ifEmpty {
         if (autofill) context.getString(R.string.no_info)
-        else EMPTY_STRING
+        else {
+            visibility = View.GONE
+            EMPTY_STRING
+        }
     }.replace("\\<[^>]*>".toRegex(), "").trim()
 
     override fun setText(text: CharSequence?, type: BufferType?) {
+        visibility = View.VISIBLE
         this.text = text?.toString() ?: EMPTY_STRING
         super.setText(
             Html.fromHtml("<b>$label</b> ${getTextFinalValue()}", Html.FROM_HTML_MODE_COMPACT),
