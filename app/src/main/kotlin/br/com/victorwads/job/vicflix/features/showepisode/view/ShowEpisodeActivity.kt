@@ -43,7 +43,7 @@ class ShowEpisodeActivity : BaseActivity(), Callback {
             episode.image?.original?.let { url ->
                 poster.contentDescription =
                     getString(R.string.episodedetails_poster_description, episode.number, episode.name)
-                Picasso.get().load(url).fit().centerCrop().noFade()
+                Picasso.get().load(url).fit().centerCrop()
                     .error(R.drawable.ic_launcher_background)
                     .into(poster, this@ShowEpisodeActivity)
             } ?: shimmer.hideShimmer()

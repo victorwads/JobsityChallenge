@@ -68,7 +68,10 @@ class ShowListingActivity : BaseActivity() {
     }
 
     private fun addShows(it: List<Show>, clean: Boolean = false) {
-        showsAdapter.addItems(it, clean)
+        if (clean) {
+            showsAdapter.clear()
+        }
+        showsAdapter.addItems(it)
         hideLoading()
     }
 

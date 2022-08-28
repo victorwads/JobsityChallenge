@@ -7,34 +7,51 @@ import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class ShowsAdapter(
     private val inflater: LayoutInflater,
     private val onSelectShow: (Show) -> Unit
 ) : RecyclerView.Adapter<ShowsAdapter.ShowViewHolder>() {
 
-    var shows: ArrayList<Show> = arrayListOf()
+    var autoFill: Boolean = true
+    private var shows: ArrayList<Show>? = null
 
-    override fun getItemCount() = shows.size
+    override fun getItemCount() = shows?.size
+        ?: LOADING_FILL.takeIf { autoFill }
+        ?: 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ShowViewHolder(ListingShowItemBinding.inflate(inflater, parent, false))
 
     override fun onBindViewHolder(holder: ShowViewHolder, position: Int) {
-        holder.bindData(shows[position], onSelectShow)
+        shows?.let {
+            holder.bindData(it[position], onSelectShow)
+        }
     }
 
-    fun addItems(items: List<Show>, clean: Boolean) {
-        if (clean) {
-            shows.size.let {
-                shows.clear()
-                notifyItemRangeRemoved(0, it)
-            }
+    fun clear(autoFill: Boolean = false) {
+        this.autoFill = autoFill
+        shows?.size?.let {
+            shows = null
+            notifyItemRangeRemoved(0, it)
         }
-        shows.size.let {
-            shows.addAll(items)
-            notifyItemRangeInserted(it, items.size)
+        if (autoFill) {
+            notifyItemRangeInserted(0, LOADING_FILL)
+        }
+    }
+
+    fun addItems(items: List<Show>) = (shows ?: arrayListOf()).let { newList ->
+        newList.addAll(items)
+        if (autoFill && shows == null) {
+            shows = newList
+            notifyItemRangeChanged(0, LOADING_FILL)
+            notifyItemRangeInserted(LOADING_FILL - 1, newList.size - LOADING_FILL)
+        } else {
+            shows = newList
+            notifyItemRangeInserted(newList.size, items.size)
         }
     }
 
@@ -43,13 +60,24 @@ class ShowsAdapter(
     ) : RecyclerView.ViewHolder(layout.root) {
 
         fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
+            root.showShimmer(true)
             labelName.text = show.name
-            show.image?.medium?.let { Picasso.get().load(it).fit().centerCrop().into(poster) }
+            show.image?.medium?.let {
+                Picasso.get().load(it).fit().centerCrop()
+                    .into(poster, object : Callback {
+                        override fun onSuccess() = root.hideShimmer()
+                        override fun onError(e: Exception?) = root.hideShimmer()
+                    })
+            }
 
             root.apply {
                 configAccessibility(R.string.listing_select_action_description)
                 setOnClickListener { onSelectShow(show) }
             }
         }
+    }
+
+    companion object {
+        const val LOADING_FILL = 5 * 3
     }
 }
