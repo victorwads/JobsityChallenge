@@ -1,7 +1,10 @@
 package br.com.victorwads.job.vicflix.commons.repositories.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Show(
     @SerializedName("id")
     val id: Int,
@@ -31,4 +34,4 @@ data class Show(
     val image: ShowImage?,
     @SerializedName("summary")
     val summary: String,
-)
+) : Parcelable
