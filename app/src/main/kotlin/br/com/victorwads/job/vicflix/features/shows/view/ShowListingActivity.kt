@@ -12,7 +12,6 @@ import br.com.victorwads.job.vicflix.features.shows.view.adapter.ShowsAdapter
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingStates
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
 
-
 class ShowListingActivity : BaseActivity() {
 
     private val layout by lazy { ListingActivityBinding.inflate(layoutInflater) }
@@ -50,8 +49,8 @@ class ShowListingActivity : BaseActivity() {
         }
     }
 
-    private fun shouldAutoLoad() = autoScroll
-            && viewModel.state.value is ShowListingStates.AddShows
+    private fun shouldAutoLoad() = autoScroll &&
+            viewModel.state.value is ShowListingStates.AddShows
 
     private fun bindData() {
         viewModel.state.observe(this) {
@@ -73,5 +72,4 @@ class ShowListingActivity : BaseActivity() {
     private fun showLoading() = layout.apply { progressBar.visibility = View.VISIBLE }
 
     private fun hideLoading() = layout.apply { progressBar.visibility = View.GONE }
-
 }

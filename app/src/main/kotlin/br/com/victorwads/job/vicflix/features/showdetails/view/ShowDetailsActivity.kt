@@ -21,31 +21,30 @@ class ShowDetailsActivity : BaseActivity() {
     private lateinit var headerLayout: ShowdetailsHeaderBinding
     private val recyclerView by lazy { ShowdetailsActivityBinding.inflate(layoutInflater).root }
     private val showShortDetails by lazy { intent.getParcelableExtra<Show>(EXTRA_SHOW) }
-    private val viewModel by lazy {
-        ShowDetailsViewModel(showShortDetails ?: throw RuntimeException("no show provided"))
-    }
+    private lateinit var viewModel: ShowDetailsViewModel
 
     private val adapters = ConcatAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (showShortDetails == null) {
-            return finish()
-        }
+        showShortDetails?.let {
+            viewModel = ShowDetailsViewModel(it)
+        } ?: return finish()
 
         bindView()
     }
 
     private fun bindView() {
         setContentView(recyclerView)
-        SingleLayoutAdapter({
-            ShowdetailsHeaderBinding.inflate(layoutInflater, it, false).also { layout ->
-                headerLayout = layout
-                bindLiveDate()
+        SingleLayoutAdapter(
+            {
+                ShowdetailsHeaderBinding.inflate(layoutInflater, it, false).also { layout ->
+                    headerLayout = layout
+                    bindLiveDate()
+                }
+            }, {
+                bindData(it)
             }
-        }, {
-            bindData(it)
-        }
         ).also { adapters.addAdapter(it) }
         recyclerView.adapter = adapters
     }

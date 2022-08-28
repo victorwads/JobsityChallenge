@@ -13,5 +13,4 @@ interface SeasonsService {
 
     @GET("seasons/{id}/episodes")
     fun getEpisodes(@Path("id") id: Int): Call<List<Episode>>
-
 }

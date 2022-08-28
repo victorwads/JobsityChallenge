@@ -9,8 +9,6 @@ class SingleLayoutAdapter<Layout : ViewBinding>(
     val onBindLayout: (Layout) -> Unit
 ) : RecyclerView.Adapter<SingleLayoutAdapter.LayoutHolder<Layout>>() {
 
-    private val items: ArrayList<Any> = arrayListOf()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutHolder(
         inflateLayout(parent)
     )

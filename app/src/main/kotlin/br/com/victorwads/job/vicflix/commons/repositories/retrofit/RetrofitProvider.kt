@@ -1,8 +1,7 @@
-package br.com.victorwads.job.vicflix.commons.repositories.retrofit;
+package br.com.victorwads.job.vicflix.commons.repositories.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 object RetrofitProvider {
 
@@ -18,5 +17,4 @@ object RetrofitProvider {
     }
 
     private const val API_BASE_URL = "https://api.tvmaze.com/"
-
 }

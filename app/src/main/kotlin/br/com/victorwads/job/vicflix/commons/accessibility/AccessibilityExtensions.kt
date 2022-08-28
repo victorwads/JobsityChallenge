@@ -26,4 +26,3 @@ private constructor(@StringRes val description: Int) : AccessibilityDelegateComp
             ViewCompat.setAccessibilityDelegate(this, AccessibilityExtensions(actionDescription))
     }
 }
-

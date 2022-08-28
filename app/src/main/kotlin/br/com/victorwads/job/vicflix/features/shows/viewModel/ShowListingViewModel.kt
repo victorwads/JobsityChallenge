@@ -42,7 +42,8 @@ class ShowListingViewModel(
             }
             state.value = ShowListingStates.Loading
             val shows = repository.search(query)
-            state.value = ShowListingStates.CleanAddShows(shows
+            state.value = ShowListingStates.CleanAddShows(
+                shows
                 .sortedBy { it.score }
                 .map { it.show }
             )

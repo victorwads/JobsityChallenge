@@ -1,6 +1,9 @@
 package br.com.victorwads.job.vicflix.features.showdetails.viewModel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.repositories.retrofit.RetrofitProvider

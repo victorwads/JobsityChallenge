@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'io.gitlab.arturbosch.detekt' apply true
 }
 
 android {
@@ -36,7 +37,7 @@ android {
     }
 
     def kotlinDir = "src/main/kotlin/"
-    def featuresDir = kotlinDir+ "br/com/victorwads/job/vicflix/features/"
+    def featuresDir = kotlinDir + "br/com/victorwads/job/vicflix/features/"
 
     sourceSets {
         main {
@@ -70,4 +71,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'com.squareup.picasso:picasso:2.8'
+
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0"
+}
+
+detekt {
+    toolVersion = "1.21.0"
+    basePath = projectDir
+    config = files("${rootProject.projectDir}/configs/detekt/config.yml")
+    autoCorrect = true
+    buildUponDefaultConfig = true
 }
