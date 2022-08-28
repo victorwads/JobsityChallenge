@@ -1,5 +1,6 @@
 package br.com.victorwads.job.vicflix.features.showdetails.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
@@ -29,10 +30,17 @@ class ShowSeasonEpisodesAdapter(
         }
     }
 
+    /**
+     * SuppressLint("NotifyDataSetChanged")
+     * Sometimes the API returns the wrong number of episodes in SeasonDetails, and leaves the
+     * UI with outdated information about episodes, so with notifyDataSetChanged() despite the
+     * performance it is necessary to review the entire listing
+     */
+    @SuppressLint("NotifyDataSetChanged")
     private fun updateEpisodes(episodes: List<Episode>) {
         this.episodes = episodes
-        if (season.size == null) {
-            notifyItemRangeInserted(HEADER_OFFSET, episodes.size)
+        if (season.size != episodes.size) {
+            notifyDataSetChanged()
         } else {
             notifyItemRangeChanged(HEADER_OFFSET, episodes.size)
         }
