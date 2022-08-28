@@ -52,11 +52,8 @@ class ShowDetailsActivity : BaseActivity() {
 
     private fun bindData(layout: ShowdetailsHeaderBinding) = layout.apply {
         showShortDetails?.let { show ->
-            title.text = show.name
             genre.text = show.genres?.joinToString()
-                ?: getString(R.string.no_info)
             summary.text = show.summary?.let { Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT) }
-                ?: getString(R.string.no_info)
 
             show.image?.original?.let { url ->
                 Picasso.get().load(url).fit().centerCrop().into(poster)

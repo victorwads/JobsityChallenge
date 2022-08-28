@@ -15,126 +15,50 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <LinearLayout
-        android:id="@+id/labels"
-        android:layout_width="0dp"
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        android:id="@+id/genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/screen_padding"
+        android:layout_marginEnd="@dimen/screen_padding"
+        android:layout_marginTop="@dimen/screen_padding"
+        app:label="@string/showdetails_label_genre"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/poster"
+        tools:text="@tools:sample/full_names" />
+
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        android:id="@+id/schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="@string/showdetails_label_schedule"
+        app:layout_constraintLeft_toLeftOf="@id/genre"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/genre"
+        tools:text="@tools:sample/full_names" />
+
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        android:id="@+id/summary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/poster">
+        app:label="@string/showdetails_label_summary"
+        app:layout_constraintLeft_toLeftOf="@id/schedule"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/schedule"
+        tools:text="@tools:sample/full_names" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/label_padding"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                android:text="@string/showdetails_label_name"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                tools:text="@tools:sample/full_names" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/label_padding"
-            android:focusable="true"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                android:text="@string/showdetails_label_genre"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                tools:text="@tools:sample/full_names" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/label_padding"
-            android:focusable="true"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                android:text="@string/showdetails_label_schedule"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                tools:text="@tools:sample/full_names" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/label_padding"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                android:text="@string/showdetails_label_summary"
-                android:textStyle="bold" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/summary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:importantForAccessibility="yes"
-                tools:text="@tools:sample/full_names" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
+    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
         android:id="@+id/label_seasons"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="@dimen/label_padding"
-        android:layout_marginEnd="12dp"
-        android:text="@string/showdetails_label_seasons"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/labels" />
+        android:orientation="vertical"
+        app:autofill="false"
+        app:label="@string/showdetails_label_seasons"
+        app:layout_constraintLeft_toLeftOf="@id/summary"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/summary" />
 
     <ProgressBar
         android:id="@+id/progressBar"

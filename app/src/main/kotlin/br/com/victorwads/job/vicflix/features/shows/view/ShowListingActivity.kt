@@ -38,7 +38,7 @@ class ShowListingActivity : BaseActivity() {
             }
         })
         layout.inputSearch.setOnEditorActionListener { textView, _, _ ->
-            layout.inputSearch.apply {
+            textView.apply {
                 viewModel.search(text.toString())
                 clearFocus()
                 (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
