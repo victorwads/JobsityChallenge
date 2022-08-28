@@ -1,7 +1,6 @@
 package br.com.victorwads.job.vicflix.features.showdetails.view
 
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import androidx.recyclerview.widget.ConcatAdapter
 import br.com.victorwads.job.vicflix.R
@@ -53,7 +52,7 @@ class ShowDetailsActivity : BaseActivity() {
     private fun bindData(layout: ShowdetailsHeaderBinding) = layout.apply {
         showShortDetails?.let { show ->
             genre.text = show.genres?.joinToString()
-            summary.text = show.summary?.let { Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT) }
+            summary.text = show.summary
 
             show.image?.original?.let { url ->
                 Picasso.get().load(url).fit().centerCrop().into(poster)
