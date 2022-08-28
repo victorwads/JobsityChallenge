@@ -56,8 +56,12 @@ class ShowDetailsActivity : BaseActivity() {
             summary.text = show.summary
 
             show.image?.original?.let { url ->
-                Picasso.get().load(url).fit().centerCrop(Gravity.TOP).into(poster)
+                poster.contentDescription = getString(R.string.showdetails_poster_description, show.name)
+                Picasso.get().load(url).fit().centerCrop(Gravity.TOP)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(poster)
             }
+
             show.schedule?.let {
                 schedule.text = if (it.time.isNullOrEmpty() && it.days.isNullOrEmpty()) {
                     null
@@ -91,11 +95,11 @@ class ShowDetailsActivity : BaseActivity() {
     }
 
     private fun showLoading() {
-        headerLayout.progressBar.visibility = View.VISIBLE
+        headerLayout.root.showShimmer(true)
     }
 
     private fun hideLoading() {
-        headerLayout.progressBar.visibility = View.GONE
+        headerLayout.root.hideShimmer()
     }
 
     companion object {

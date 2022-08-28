@@ -6,7 +6,7 @@
     <string name="showdetails_label_episodes">Episódios: </string>
     <string name="showdetails_label_seasons">Temporadas: </string>
     <string name="showdetails_label_summary">Resumo: </string>
-    <string name="showdetails_image_accessibility">imagem de capa do programa "%1$s"</string>
+    <string name="showdetails_poster_description">imagem de capa do programa "%1$s"</string>
     <string name="showdetails_season">Temporada %1$s</string>
     <string name="showdetails_season_name">Temporada %1$d - %2$s</string>
     <string name="showdetails_episode">Episódio %1$d</string>

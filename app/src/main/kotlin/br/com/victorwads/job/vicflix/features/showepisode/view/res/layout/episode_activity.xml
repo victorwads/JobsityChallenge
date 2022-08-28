@@ -3,35 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="false">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/poster"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintDimensionRatio="3:2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShowDetailsCoverOverlay"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:shimmer_auto_start="true">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/poster"
+            android:layout_width="match_parent"
+            android:background="@color/semi_transparent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            app:shapeAppearanceOverlay="@style/ShowDetailsCoverOverlay"
+            tools:srcCompat="@tools:sample/avatars" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
         android:id="@+id/season"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/screen_padding"
-        app:label="@string/showdetails_label_season"
+        app:label="@string/episodedetails_label_season"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/poster"
+        app:layout_constraintTop_toBottomOf="@id/shimmer"
         tools:text="@tools:sample/full_names" />
 
     <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
         android:id="@+id/number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:label="@string/showdetails_label_number"
+        app:label="@string/episodedetails_label_number"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="@id/season"
         app:layout_constraintTop_toBottomOf="@id/season"

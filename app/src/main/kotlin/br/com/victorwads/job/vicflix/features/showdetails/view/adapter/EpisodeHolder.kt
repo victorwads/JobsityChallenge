@@ -21,6 +21,7 @@ class EpisodeHolder(
                 season.number, number, episode.name
             )
         }
+        shimmer.hideShimmer()
     }
 
     fun bind(episode: Int) = layout.labelName.apply {

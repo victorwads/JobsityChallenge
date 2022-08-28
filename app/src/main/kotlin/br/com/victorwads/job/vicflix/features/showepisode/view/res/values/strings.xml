@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="showdetails_label_season">Season:</string>
-    <string name="showdetails_label_number">Episode number:</string>
+    <string name="episodedetails_poster_description">cover image of episode %1$d, named: "%2$s"</string>
+    <string name="episodedetails_label_season">Season:</string>
+    <string name="episodedetails_label_number">Episode number:</string>
 </resources>
