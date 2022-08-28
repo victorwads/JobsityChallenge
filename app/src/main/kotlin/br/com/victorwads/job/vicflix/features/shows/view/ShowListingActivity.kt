@@ -57,9 +57,12 @@ class ShowListingActivity : BaseActivity() {
             when (it) {
                 is ShowListingStates.AddShows -> addShows(it.shows)
                 is ShowListingStates.CleanAddShows -> addShows(it.shows, true)
-                is ShowListingStates.Error -> TODO()
+                is ShowListingStates.Error -> hideLoading()
                 ShowListingStates.Loading -> showLoading()
-                ShowListingStates.ShowsEnded -> autoScroll = false
+                ShowListingStates.ShowsEnded -> {
+                    hideLoading()
+                    autoScroll = false
+                }
             }
         }
     }

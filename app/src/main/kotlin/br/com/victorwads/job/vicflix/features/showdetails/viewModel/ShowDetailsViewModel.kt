@@ -31,6 +31,10 @@ class ShowDetailsViewModel(
         viewModelScope.launch(Main) {
             state.value = ShowDetailsStates.Loading
             val seasons = repository.getSeasons(show)
+            if (seasons == null) {
+                state.value = ShowDetailsStates.Error()
+                return@launch
+            }
             state.value = ShowDetailsStates.SeasonsLoaded(seasons)
         }
     }
@@ -41,6 +45,9 @@ class ShowDetailsViewModel(
                 if (it is ShowSeasonStates.Load) {
                     viewModelScope.launch(Main) {
                         val episodes = repository.getEpisodes(season)
+                        if (episodes == null) {
+                            return@launch
+                        }
                         value = ShowSeasonStates.EpisodesLoaded(episodes)
                     }
                 }

@@ -25,6 +25,10 @@ class ShowListingViewModel(
             state.value = ShowListingStates.Loading
             val shows = repository.getMoreShows()
             if (shows == null) {
+                state.value = ShowListingStates.Error()
+                return@launch
+            }
+            if (shows.isEmpty()) {
                 state.value = ShowListingStates.ShowsEnded
                 return@launch
             }
@@ -43,9 +47,9 @@ class ShowListingViewModel(
             state.value = ShowListingStates.Loading
             val shows = repository.search(query)
             state.value = ShowListingStates.CleanAddShows(
-                shows
-                .sortedBy { it.score }
-                .map { it.show }
+                (shows ?: arrayListOf())
+                    .sortedBy { it.score }
+                    .map { it.show }
             )
         }
     }

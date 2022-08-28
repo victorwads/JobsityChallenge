@@ -4,6 +4,7 @@ import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.repositories.model.ShowSearch
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class ShowsRepository(
     private val service: ShowsService
@@ -11,13 +12,22 @@ class ShowsRepository(
 
     var currentPage = 0
 
-    suspend fun search(query: String): List<ShowSearch> = withContext(IO) {
-        service.search(query).execute().body() ?: listOf()
+    suspend fun search(query: String): List<ShowSearch>? = withContext(IO) {
+        try {
+            service.search(query).execute().body() ?: listOf()
+        } catch (e: IOException) {
+            null
+        }
     }
 
     suspend fun getMoreShows(): List<Show>? = withContext(IO) {
-        currentPage++
-        service.loadPage(currentPage).execute().body()
+        try {
+            val shows = service.loadPage(currentPage).execute().body()
+            currentPage++
+            shows
+        } catch (e: IOException) {
+            null
+        }
     }
 
     fun clear() {
