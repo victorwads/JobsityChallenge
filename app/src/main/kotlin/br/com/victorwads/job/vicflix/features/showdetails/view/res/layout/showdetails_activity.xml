@@ -5,6 +5,7 @@
     android:id="@+id/episodes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:itemCount="1"
     tools:listitem="@layout/showdetails_header" />

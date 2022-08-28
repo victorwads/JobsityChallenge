@@ -2,34 +2,53 @@ package br.com.victorwads.job.vicflix.features.showdetails.view
 
 import android.os.Bundle
 import android.text.Html
+import android.view.View
 import androidx.recyclerview.widget.ConcatAdapter
 import br.com.victorwads.job.vicflix.R
+import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ShowdetailsActivityBinding
 import br.com.victorwads.job.vicflix.databinding.ShowdetailsHeaderBinding
+import br.com.victorwads.job.vicflix.features.showdetails.view.adapter.ShowSeasonEpisodesAdapter
 import br.com.victorwads.job.vicflix.features.showdetails.view.adapter.SingleLayoutAdapter
+import br.com.victorwads.job.vicflix.features.showdetails.viewModel.ShowDetailsStates
+import br.com.victorwads.job.vicflix.features.showdetails.viewModel.ShowDetailsViewModel
+import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
 import com.squareup.picasso.Picasso
+import java.lang.RuntimeException
 
 class ShowDetailsActivity : BaseActivity() {
 
+    private lateinit var headerLayout: ShowdetailsHeaderBinding
     private val recyclerView by lazy { ShowdetailsActivityBinding.inflate(layoutInflater).root }
     private val showShortDetails by lazy { intent.getParcelableExtra<Show>(EXTRA_SHOW) }
+    private val viewModel by lazy {
+        ShowDetailsViewModel(showShortDetails ?: throw RuntimeException("no show provided"))
+    }
 
     private val adapters = ConcatAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(recyclerView)
+        if (showShortDetails == null) {
+            return finish()
+        }
 
         bindView()
     }
 
     private fun bindView() {
-        SingleLayoutAdapter(
-            { ShowdetailsHeaderBinding.inflate(layoutInflater, it, false) },
-            { bindData(it) }
-        ).let { adapters.addAdapter(it) }
+        setContentView(recyclerView)
+        SingleLayoutAdapter({
+            ShowdetailsHeaderBinding.inflate(layoutInflater, it, false).also { layout ->
+                headerLayout = layout
+                bindLiveDate()
+            }
+        }, {
+            bindData(it)
+        }
+        ).also { adapters.addAdapter(it) }
         recyclerView.adapter = adapters
     }
 
@@ -49,6 +68,33 @@ class ShowDetailsActivity : BaseActivity() {
                 )
             }
         }
+    }
+
+    private fun bindLiveDate() {
+        viewModel.state.observe(this) {
+            when (it) {
+                is ShowDetailsStates.SeasonsLoaded -> addSeasons(it.seasons)
+                is ShowDetailsStates.Error -> hideLoading()
+                ShowDetailsStates.HideLoading -> hideLoading()
+                ShowDetailsStates.Loading -> showLoading()
+            }
+        }
+    }
+
+    private fun addSeasons(seasons: List<Season>) {
+        hideLoading()
+        seasons.forEach {
+            adapters.addAdapter(ShowSeasonEpisodesAdapter(it, layoutInflater))
+            adapters.notifyDataSetChanged()
+        }
+    }
+
+    private fun showLoading() {
+        headerLayout.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        headerLayout.progressBar.visibility = View.GONE
     }
 
     companion object {

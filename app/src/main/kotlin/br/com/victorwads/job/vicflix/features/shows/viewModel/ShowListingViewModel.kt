@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 
 class ShowListingViewModel(
-    val repository: ShowsRepository =
+    private val repository: ShowsRepository =
         ShowsRepository(RetrofitProvider.instance.create(ShowsService::class.java))
 ) : ViewModel() {
 
