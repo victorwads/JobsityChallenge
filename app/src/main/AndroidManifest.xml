@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".features.settings.view.SettingsActivity" />
         <activity android:name=".features.showdetails.view.ShowDetailsActivity" />
         <activity android:name=".features.showepisode.view.ShowEpisodeActivity" />
     </application>

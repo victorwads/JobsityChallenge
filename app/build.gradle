@@ -43,7 +43,9 @@ android {
             java.srcDirs += kotlinDir
             res.srcDirs += [
                     featuresDir + "shows/view/res/",
+                    featuresDir + "showepisode/view/res/",
                     featuresDir + "showdetails/view/res/",
+                    featuresDir + "settings/view/res/",
             ]
         }
     }
