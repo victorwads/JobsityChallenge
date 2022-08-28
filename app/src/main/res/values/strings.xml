@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name" translatable="false">VicFlix</string>
+    <string name="no_info">no info</string>
 </resources>

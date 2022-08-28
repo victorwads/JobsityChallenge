@@ -35,8 +35,8 @@ class ShowDetailsActivity : BaseActivity() {
     private fun bindData(layout: ShowdetailsHeaderBinding) = layout.apply {
         showShortDetails?.let { show ->
             title.text = show.name
-            genre.text = show.genres.joinToString()
-            summary.text = show.summary
+            genre.text = show.genres?.joinToString() ?: getString(R.string.no_info)
+            summary.text = show.summary ?: getString(R.string.no_info)
 
             show.image?.original?.let { url -> Picasso.get().load(url).into(poster) }
             show.schedule?.let {
