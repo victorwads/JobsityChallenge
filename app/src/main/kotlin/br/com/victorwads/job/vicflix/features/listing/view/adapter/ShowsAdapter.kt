@@ -1,8 +1,10 @@
-package br.com.victorwads.job.vicflix.features.listing.adpter
+package br.com.victorwads.job.vicflix.features.listing.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import br.com.victorwads.job.vicflix.R
+import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
 import com.squareup.picasso.Picasso
@@ -35,11 +37,11 @@ class ShowsAdapter(
 
         fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
             labelName.text = show.name
-            show.image?.medium?.let {
-                Picasso.get().load(it).into(poster)
-            }
-            root.setOnClickListener {
-                onSelectShow(show)
+            show.image?.medium?.let { Picasso.get().load(it).into(poster) }
+
+            root.apply {
+                configAccessibility(R.string.listing_select_action_description)
+                setOnClickListener { onSelectShow(show) }
             }
         }
     }

@@ -2,18 +2,16 @@ package br.com.victorwads.job.vicflix.features.listing.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import br.com.victorwads.job.vicflix.commons.view.Navigation
+import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
-import br.com.victorwads.job.vicflix.features.listing.adpter.ShowsAdapter
+import br.com.victorwads.job.vicflix.features.listing.view.adapter.ShowsAdapter
 import br.com.victorwads.job.vicflix.features.listing.viewModel.ShowListingStates
 import br.com.victorwads.job.vicflix.features.listing.viewModel.ShowListingViewModel
 
-class ShowListingActivity : AppCompatActivity() {
+class ShowListingActivity : BaseActivity() {
 
     private val layout by lazy { ListingActivityBinding.inflate(layoutInflater) }
-    private val navigation by lazy { Navigation(this) }
     private val showsAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails) }
     private val viewModel by lazy { ShowListingViewModel() }
 

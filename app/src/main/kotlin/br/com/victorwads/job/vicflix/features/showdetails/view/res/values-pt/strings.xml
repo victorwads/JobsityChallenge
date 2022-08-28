@@ -1,0 +1,10 @@
+<resources>
+    <string name="showdetails_label_name">Nome: </string>
+    <string name="showdetails_label_genre">Genêros: </string>
+    <string name="showdetails_label_schedule">Programação: </string>
+    <string name="showdetails_label_schedule_description">%1$s, ás %2$s</string>
+    <string name="showdetails_label_episodes">Episódios: </string>
+    <string name="showdetails_label_seasons">Temporadas: </string>
+    <string name="showdetails_label_summary">Resumo: </string>
+    <string name="showdetails_image_accessibility">imagem de capa do programa "%1$s"</string>
+</resources>

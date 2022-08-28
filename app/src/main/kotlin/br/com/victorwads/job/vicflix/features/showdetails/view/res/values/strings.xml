@@ -1,0 +1,10 @@
+<resources>
+    <string name="showdetails_label_name">Title: </string>
+    <string name="showdetails_label_genre">Genre: </string>
+    <string name="showdetails_label_schedule">Schedule: </string>
+    <string name="showdetails_label_schedule_description">%1$s, at %2$s</string>
+    <string name="showdetails_label_episodes">Episodes: </string>
+    <string name="showdetails_label_seasons">Seasons: </string>
+    <string name="showdetails_label_summary">Summary: </string>
+    <string name="showdetails_image_accessibility">cover image of the show "%1$s"</string>
+</resources>
