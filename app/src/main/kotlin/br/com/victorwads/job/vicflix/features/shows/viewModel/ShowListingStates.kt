@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.features.listing.viewModel
+package br.com.victorwads.job.vicflix.features.shows.viewModel
 
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 

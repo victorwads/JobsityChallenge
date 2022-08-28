@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.features.listing.repository
+package br.com.victorwads.job.vicflix.features.shows.repository
 
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import kotlinx.coroutines.Dispatchers.IO

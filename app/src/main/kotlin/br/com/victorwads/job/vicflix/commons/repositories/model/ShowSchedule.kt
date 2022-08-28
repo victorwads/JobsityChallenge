@@ -6,8 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ShowSchedule(
-    @SerializedName("time")
-    val time: String,
-    @SerializedName("days")
-    val days: List<String>,
+    @SerializedName("time") val time: String,
+    @SerializedName("days") val days: List<String>,
 ) : Parcelable

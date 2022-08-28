@@ -1,13 +1,13 @@
-package br.com.victorwads.job.vicflix.features.listing.view
+package br.com.victorwads.job.vicflix.features.shows.view
 
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
-import br.com.victorwads.job.vicflix.features.listing.view.adapter.ShowsAdapter
-import br.com.victorwads.job.vicflix.features.listing.viewModel.ShowListingStates
-import br.com.victorwads.job.vicflix.features.listing.viewModel.ShowListingViewModel
+import br.com.victorwads.job.vicflix.features.shows.view.adapter.ShowsAdapter
+import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingStates
+import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
 
 class ShowListingActivity : BaseActivity() {
 

@@ -1,11 +1,11 @@
-package br.com.victorwads.job.vicflix.features.listing.viewModel
+package br.com.victorwads.job.vicflix.features.shows.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.victorwads.job.vicflix.commons.repositories.retrofit.RetrofitProvider
-import br.com.victorwads.job.vicflix.features.listing.repository.ShowsRepository
-import br.com.victorwads.job.vicflix.features.listing.repository.ShowsService
+import br.com.victorwads.job.vicflix.features.shows.repository.ShowsRepository
+import br.com.victorwads.job.vicflix.features.shows.repository.ShowsService
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 

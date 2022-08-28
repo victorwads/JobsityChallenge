@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.features.listing.view.adapter
+package br.com.victorwads.job.vicflix.features.shows.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

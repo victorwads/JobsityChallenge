@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ShowImage(
-    @SerializedName("medium")
-    val medium: String?,
-    @SerializedName("original")
-    val original: String?,
+data class APIImage(
+    @SerializedName("medium") val medium: String?,
+    @SerializedName("original") val original: String?,
 ) : Parcelable
