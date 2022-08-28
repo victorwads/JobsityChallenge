@@ -31,7 +31,11 @@ class ShowSeasonEpisodesAdapter(
 
     private fun updateEpisodes(episodes: List<Episode>) {
         this.episodes = episodes
-        notifyItemRangeChanged(HEADER_OFFSET, episodes.size)
+        if (season.size == null) {
+            notifyItemRangeInserted(HEADER_OFFSET, episodes.size)
+        } else {
+            notifyItemRangeChanged(HEADER_OFFSET, episodes.size)
+        }
     }
 
     private fun loadEpisodes() {
@@ -55,7 +59,7 @@ class ShowSeasonEpisodesAdapter(
         when (holder) {
             is SeasonHolder -> holder.bind(season)
             is EpisodeHolder -> episodes?.getOrNull(position - HEADER_OFFSET)
-                ?.let { holder.bind(it) } ?: holder.bind(position - HEADER_OFFSET)
+                ?.let { holder.bind(season, it, position) } ?: holder.bind(position)
         }
     }
 

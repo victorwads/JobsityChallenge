@@ -9,6 +9,10 @@
         android:id="@+id/input_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/showdetails_serach_hint"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -9,5 +9,6 @@
     <string name="showdetails_image_accessibility">imagem de capa do programa "%1$s"</string>
     <string name="showdetails_season">Temporada %1$s</string>
     <string name="showdetails_season_name">Temporada %1$d - %2$s</string>
-    <string name="showdetails_episode">Episódio %1$s</string>
+    <string name="showdetails_episode">Episódio %1$d</string>
+    <string name="showdetails_episode_name">T%1$dE%2$d - %3$s</string>
 </resources>

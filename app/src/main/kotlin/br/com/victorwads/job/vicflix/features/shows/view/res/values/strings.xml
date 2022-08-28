@@ -1,3 +1,4 @@
 <resources>
     <string name="listing_select_action_description">view show details</string>
+    <string name="showdetails_serach_hint">Search</string>
 </resources>

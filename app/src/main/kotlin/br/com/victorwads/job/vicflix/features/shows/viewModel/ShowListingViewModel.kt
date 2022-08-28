@@ -31,4 +31,21 @@ class ShowListingViewModel(
             state.value = ShowListingStates.AddShows(shows)
         }
     }
+
+    fun search(query: String) {
+        viewModelScope.launch(Main) {
+            repository.clear()
+            if (query.isEmpty()) {
+                state.value = ShowListingStates.CleanAddShows(arrayListOf())
+                loadMore()
+                return@launch
+            }
+            state.value = ShowListingStates.Loading
+            val shows = repository.search(query)
+            state.value = ShowListingStates.CleanAddShows(shows
+                .sortedBy { it.score }
+                .map { it.show }
+            )
+        }
+    }
 }

@@ -25,10 +25,17 @@ class ShowsAdapter(
         holder.bindData(shows[position], onSelectShow)
     }
 
-    fun addItems(items: List<Show>) {
-        val lastIndex = shows.size
-        shows.addAll(items)
-        notifyItemRangeInserted(lastIndex, items.size)
+    fun addItems(items: List<Show>, clean: Boolean) {
+        if (clean) {
+            shows.size.let {
+                shows.clear()
+                notifyItemRangeRemoved(0, it)
+            }
+        }
+        shows.size.let {
+            shows.addAll(items)
+            notifyItemRangeInserted(it, items.size)
+        }
     }
 
     class ShowViewHolder(
