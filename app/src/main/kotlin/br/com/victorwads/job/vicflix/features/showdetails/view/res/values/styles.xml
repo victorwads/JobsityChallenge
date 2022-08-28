@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShowDetailsCoverOverlay">
+        <item name="cornerSizeBottomLeft">8%</item>
+        <item name="cornerSizeBottomRight">8%</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+    </style>
+</resources>

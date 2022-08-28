@@ -6,11 +6,11 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/poster"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="12dp"
+        app:shapeAppearanceOverlay="@style/ShowListingCoverOverlay"
         app:layout_constraintDimensionRatio="4:6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
