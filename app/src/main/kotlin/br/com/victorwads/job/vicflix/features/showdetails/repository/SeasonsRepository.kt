@@ -1,5 +1,6 @@
 package br.com.victorwads.job.vicflix.features.showdetails.repository
 
+import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import kotlinx.coroutines.Dispatchers.IO
@@ -11,6 +12,10 @@ class SeasonsRepository(
 
     suspend fun getSeasons(show: Show): List<Season> = withContext(IO) {
         service.getSeasons(show.id).execute().body() ?: listOf()
+    }
+
+    suspend fun getEpisodes(season: Season): List<Episode> = withContext(IO) {
+        service.getEpisodes(season.id).execute().body() ?: listOf()
     }
 
     // TODO Handle End and Errors

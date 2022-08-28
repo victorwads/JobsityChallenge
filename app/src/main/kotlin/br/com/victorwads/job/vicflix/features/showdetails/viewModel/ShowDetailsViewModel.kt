@@ -1,8 +1,7 @@
 package br.com.victorwads.job.vicflix.features.showdetails.viewModel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.repositories.retrofit.RetrofitProvider
 import br.com.victorwads.job.vicflix.features.showdetails.repository.SeasonsRepository
@@ -32,4 +31,16 @@ class ShowDetailsViewModel(
             state.value = ShowDetailsStates.SeasonsLoaded(seasons)
         }
     }
+
+    fun loadEpisodes(season: Season, owner: LifecycleOwner) =
+        MutableLiveData<ShowSeasonStates>().apply {
+            observe(owner) {
+                if (it is ShowSeasonStates.Load) {
+                    viewModelScope.launch(Main) {
+                        val episodes = repository.getEpisodes(season)
+                        value = ShowSeasonStates.EpisodesLoaded(episodes)
+                    }
+                }
+            }
+        }
 }

@@ -14,9 +14,7 @@ import br.com.victorwads.job.vicflix.features.showdetails.view.adapter.ShowSeaso
 import br.com.victorwads.job.vicflix.features.showdetails.view.adapter.SingleLayoutAdapter
 import br.com.victorwads.job.vicflix.features.showdetails.viewModel.ShowDetailsStates
 import br.com.victorwads.job.vicflix.features.showdetails.viewModel.ShowDetailsViewModel
-import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
 import com.squareup.picasso.Picasso
-import java.lang.RuntimeException
 
 class ShowDetailsActivity : BaseActivity() {
 
@@ -84,9 +82,11 @@ class ShowDetailsActivity : BaseActivity() {
     private fun addSeasons(seasons: List<Season>) {
         hideLoading()
         seasons.forEach {
-            adapters.addAdapter(ShowSeasonEpisodesAdapter(it, layoutInflater))
-            adapters.notifyDataSetChanged()
+            adapters.addAdapter(
+                ShowSeasonEpisodesAdapter(it, layoutInflater, this, viewModel)
+            )
         }
+        adapters.notifyItemRangeInserted(1, seasons.size)
     }
 
     private fun showLoading() {

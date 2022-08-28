@@ -10,5 +10,4 @@
     <string name="showdetails_season">Temporada %1$s</string>
     <string name="showdetails_season_name">Temporada %1$d - %2$s</string>
     <string name="showdetails_episode">Episódio %1$s</string>
-    <string name="showdetails_episode_name">Episódio %1$d - %2$s</string>
 </resources>
