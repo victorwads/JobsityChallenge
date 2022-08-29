@@ -19,9 +19,10 @@ class AuthHelper(val activity: FragmentActivity) {
     fun auth(onError: () -> Unit, onSuccess: () -> Unit) {
 
         BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login for my app")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setTitle("Auth Required")
+            .setSubtitle("Log in using your credentials")
+            .setConfirmationRequired(false)
+            .setAllowedAuthenticators(Authenticators.BIOMETRIC_WEAK or Authenticators.BIOMETRIC_STRONG or Authenticators.DEVICE_CREDENTIAL )
             .build().let {
                 BiometricPrompt(
                     activity,
@@ -32,7 +33,7 @@ class AuthHelper(val activity: FragmentActivity) {
     }
 
     fun isEnabled(): Boolean = PreferenceManager.getDefaultSharedPreferences(activity)
-        .getBoolean(Companion.CONFIG_KEY, false)
+        .getBoolean(CONFIG_KEY, false)
 
     private class Handler(
         val onError: () -> Unit,
