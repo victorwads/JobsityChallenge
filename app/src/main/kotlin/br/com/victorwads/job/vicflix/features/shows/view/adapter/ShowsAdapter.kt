@@ -3,18 +3,14 @@ package br.com.victorwads.job.vicflix.features.shows.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.victorwads.job.vicflix.R
-import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
-import br.com.victorwads.job.vicflix.commons.view.ShimmerCallBack
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
-import com.squareup.picasso.Picasso
 
 class ShowsAdapter(
     private val inflater: LayoutInflater,
     private val onSelectShow: (Show) -> Unit,
     private var autoFill: Boolean = true
-) : RecyclerView.Adapter<ShowsAdapter.ShowViewHolder>() {
+) : RecyclerView.Adapter<ShowViewHolder>() {
 
     private var shows: ArrayList<Show>? = null
 
@@ -58,28 +54,6 @@ class ShowsAdapter(
             } else {
                 shows = newList
                 notifyItemRangeInserted(newList.size, items.size)
-            }
-        }
-    }
-
-    class ShowViewHolder(
-        private val layout: ListingShowItemBinding
-    ) : RecyclerView.ViewHolder(layout.root) {
-
-        fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
-            root.showShimmer(true)
-            labelName.text = show.name
-            show.image?.medium?.let {
-                Picasso.get().load(it).fit().centerCrop()
-                    .error(R.drawable.ic_launcher_background)
-                    .into(poster, ShimmerCallBack(root))
-            }
-
-            root.apply {
-                configAccessibility(R.string.listing_select_action_description)
-                setOnClickListener {
-                    onSelectShow(show)
-                }
             }
         }
     }

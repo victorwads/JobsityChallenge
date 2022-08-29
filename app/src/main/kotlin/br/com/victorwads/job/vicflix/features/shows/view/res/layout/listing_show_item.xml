@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:shimmer_auto_start="true">
+    app:shimmer_auto_start="true"
+    tools:shimmer_base_alpha="1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/poster"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_margin="12dp"
             android:background="@color/semi_transparent"
             app:layout_constraintDimensionRatio="4:6"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +34,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/poster"
             tools:text="@tools:sample/full_names" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_circle"
+            android:backgroundTint="?attr/colorBackgroundFloating"
+            android:contentDescription="@string/favorites_menu_action"
+            android:focusable="true"
+            android:padding="5dp"
+            android:tint="?attr/colorPrimary"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_favorite"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>
