@@ -9,7 +9,6 @@ import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import java.lang.Exception
 
 class ShowsAdapter(
     private val inflater: LayoutInflater,
@@ -39,22 +38,27 @@ class ShowsAdapter(
     }
 
     fun clear() {
-        shows?.size?.let {
+        itemCount.let {
             autoFill = false
             shows = null
-            notifyItemRangeRemoved(0, itemCount)
+            notifyItemRangeRemoved(0, it)
         }
     }
 
-    fun addItems(items: List<Show>) = (shows ?: arrayListOf()).let { newList ->
-        newList.addAll(items)
-        if (autoFill && shows == null) {
-            shows = newList
-            notifyItemRangeChanged(0, LOADING_FILL)
-            notifyItemRangeInserted(LOADING_FILL - 1, newList.size - LOADING_FILL)
-        } else {
-            shows = newList
-            notifyItemRangeInserted(newList.size, items.size)
+    fun addItems(items: List<Show>, clean: Boolean = false) {
+        if (clean) {
+            clear()
+        }
+        (shows ?: arrayListOf()).let { newList ->
+            newList.addAll(items)
+            if (autoFill && shows == null) {
+                shows = newList
+                notifyItemRangeChanged(0, LOADING_FILL)
+                notifyItemRangeInserted(LOADING_FILL - 1, newList.size - LOADING_FILL)
+            } else {
+                shows = newList
+                notifyItemRangeInserted(newList.size, items.size)
+            }
         }
     }
 
@@ -75,7 +79,9 @@ class ShowsAdapter(
 
             root.apply {
                 configAccessibility(R.string.listing_select_action_description)
-                setOnClickListener { onSelectShow(show) }
+                setOnClickListener {
+                    onSelectShow(show)
+                }
             }
         }
     }

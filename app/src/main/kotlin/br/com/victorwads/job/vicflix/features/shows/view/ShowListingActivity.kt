@@ -18,11 +18,10 @@ import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewMod
 
 class ShowListingActivity : BaseActivity() {
 
-    private var favorite: Boolean = false
     private val layout by lazy { ListingActivityBinding.inflate(layoutInflater) }
     private val showsAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails) }
     private val showsFavoritesAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails, false) }
-    private val viewModel by lazy { ShowListingViewModel() }
+    private val viewModel by lazy { ShowListingViewModel(this) }
 
     private var autoScroll = true
 
@@ -34,10 +33,15 @@ class ShowListingActivity : BaseActivity() {
         bindData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadFavorites()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         menu.findItem(R.id.favorite).let {
-            updateFavorite(it, favorite)
+            updateFavorite(it, viewModel.favorite)
         }
         return true
     }
@@ -46,7 +50,7 @@ class ShowListingActivity : BaseActivity() {
         when (item.itemId) {
             R.id.settings -> navigation.openPreferences()
             R.id.favorite -> {
-                updateFavorite(item, !favorite)
+                updateFavorite(item, !viewModel.favorite)
                 filterFavorites()
             }
             else -> return false
@@ -55,18 +59,18 @@ class ShowListingActivity : BaseActivity() {
     }
 
     private fun updateFavorite(item: MenuItem, value: Boolean) {
-        favorite = value
+        viewModel.favorite = value
         item.setIcon(
-            if (favorite) R.drawable.ic_favorite_filled
+            if (value) R.drawable.ic_favorite_filled
             else R.drawable.ic_favorite
         )
         layout.inputSearch.visibility =
-            if (favorite) View.GONE
+            if (value) View.GONE
             else View.VISIBLE
     }
 
     private fun filterFavorites() {
-        if (favorite) {
+        if (viewModel.favorite) {
             layout.shows.adapter = showsFavoritesAdapter
         } else {
             layout.shows.adapter = showsAdapter
@@ -103,6 +107,7 @@ class ShowListingActivity : BaseActivity() {
             when (it) {
                 is ShowListingStates.AddShows -> addShows(it.shows)
                 is ShowListingStates.CleanAddShows -> addShows(it.shows, true)
+                is ShowListingStates.Favorites -> showsFavoritesAdapter.addItems(it.shows, true)
                 is ShowListingStates.Error -> hideLoading()
                 ShowListingStates.Loading -> showLoading()
                 ShowListingStates.ShowsEnded -> {
@@ -114,10 +119,7 @@ class ShowListingActivity : BaseActivity() {
     }
 
     private fun addShows(it: List<Show>, clean: Boolean = false) {
-        if (clean) {
-            showsAdapter.clear()
-        }
-        showsAdapter.addItems(it)
+        showsAdapter.addItems(it, clean)
         hideLoading()
     }
 

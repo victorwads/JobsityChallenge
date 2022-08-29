@@ -1,5 +1,6 @@
 package br.com.victorwads.job.vicflix.features.showdetails.viewModel
 
+import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,19 +8,26 @@ import androidx.lifecycle.viewModelScope
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.repositories.retrofit.RetrofitProvider
+import br.com.victorwads.job.vicflix.features.favorites.repository.FavoritesRepository
 import br.com.victorwads.job.vicflix.features.showdetails.repository.SeasonsRepository
 import br.com.victorwads.job.vicflix.features.showdetails.repository.SeasonsService
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 
-class ShowDetailsViewModel(
-    val show: Show,
-    private val repository: SeasonsRepository = SeasonsRepository(
-        RetrofitProvider.instance.create(
-            SeasonsService::class.java
-        )
-    )
-) : ViewModel() {
+class ShowDetailsViewModel(context: Context, val show: Show) : ViewModel() {
+
+    private val seasonsRepository = SeasonsRepository(RetrofitProvider.instance.create(SeasonsService::class.java))
+    private val favoritesRepository = FavoritesRepository(context)
+
+    var favorite: Boolean
+        get() = favoritesRepository.isFavorite(show)
+        set(value) {
+            if (value) {
+                favoritesRepository.add(show)
+            } else {
+                favoritesRepository.remove(show)
+            }
+        }
 
     val state = MutableLiveData<ShowDetailsStates>()
 
@@ -30,7 +38,7 @@ class ShowDetailsViewModel(
     private fun load() {
         viewModelScope.launch(Main) {
             state.value = ShowDetailsStates.Loading
-            val seasons = repository.getSeasons(show)
+            val seasons = seasonsRepository.getSeasons(show)
             if (seasons == null) {
                 state.value = ShowDetailsStates.Error()
                 return@launch
@@ -44,7 +52,7 @@ class ShowDetailsViewModel(
             observe(owner) {
                 if (it is ShowSeasonStates.Load) {
                     viewModelScope.launch(Main) {
-                        val episodes = repository.getEpisodes(season)
+                        val episodes = seasonsRepository.getEpisodes(season)
                         if (episodes == null) {
                             return@launch
                         }
