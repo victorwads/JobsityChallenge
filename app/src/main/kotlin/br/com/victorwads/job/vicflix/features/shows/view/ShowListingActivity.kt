@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
@@ -99,8 +100,9 @@ class ShowListingActivity : BaseActivity() {
         })
         layout.root.layoutTransition = LayoutTransition()
         layout.inputSearch.setOnEditorActionListener { textView, _, _ ->
+            layout.clearSearch.visibility = View.VISIBLE
             textView.apply {
-                viewModel.search(text.toString())
+                search()
                 clearFocus()
                 (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
                     hideSoftInputFromWindow(windowToken, 0)
@@ -108,6 +110,17 @@ class ShowListingActivity : BaseActivity() {
             }
             true
         }
+        layout.clearSearch.setOnClickListener {
+            layout.inputSearch.apply {
+                setText("")
+                search()
+            }
+            layout.clearSearch.visibility = View.GONE
+        }
+    }
+
+    private fun TextView.search() {
+        viewModel.search(text.toString())
     }
 
     private fun bindData() {
