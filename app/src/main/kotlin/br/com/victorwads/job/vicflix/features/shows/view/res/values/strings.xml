@@ -1,4 +1,7 @@
 <resources>
     <string name="listing_select_action_description">view show details</string>
-    <string name="showdetails_serach_hint">Search</string>
+    <string name="listing_search_hint">Search</string>
+    <string name="listing_title">Shows</string>
+    <string name="listing_searching_title">Shows Search</string>
+    <string name="listing_loading">Loading</string>
 </resources>

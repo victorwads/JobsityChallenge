@@ -21,15 +21,25 @@ class ShowListingViewModel(
     val state = MutableLiveData<ShowListingStates>()
     var favorite: Boolean = false
         set(value) {
-            loadFavorites()
+            if (value) loadFavorites()
+            else loadMore()
             field = value
         }
 
-    fun loadFavorites() {
-        state.value = ShowListingStates.Favorites(favoritesRepository.getAll().sortedBy { it.name })
+    private fun loadFavorites() {
+        state.value = ShowListingStates.Loading
+        viewModelScope.launch(Main) {
+            repository.clear()
+            state.value = ShowListingStates.Favorites(
+                favoritesRepository.getAll().sortedBy { it.name }
+            )
+        }
     }
 
     fun loadMore() {
+        if (state.value !is ShowListingStates.AddShows) {
+            state.value = ShowListingStates.Loading
+        }
         viewModelScope.launch(Main) {
             val shows = repository.getMoreShows()
             if (shows == null) {
@@ -45,15 +55,15 @@ class ShowListingViewModel(
     }
 
     fun search(query: String) {
+        state.value = ShowListingStates.Loading
         viewModelScope.launch(Main) {
             repository.clear()
             if (query.isEmpty()) {
-                state.value = ShowListingStates.CleanAddShows(arrayListOf())
                 loadMore()
                 return@launch
             }
             val shows = repository.search(query)
-            state.value = ShowListingStates.CleanAddShows(
+            state.value = ShowListingStates.SearchedShows(
                 (shows ?: arrayListOf())
                     .sortedBy { it.score }
                     .map { it.show }

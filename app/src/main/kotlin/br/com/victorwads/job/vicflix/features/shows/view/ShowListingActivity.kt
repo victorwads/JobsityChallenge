@@ -1,16 +1,15 @@
 package br.com.victorwads.job.vicflix.features.shows.view
 
 import android.animation.LayoutTransition
-import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent.ACTION_DOWN
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import br.com.victorwads.job.vicflix.R
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
 import br.com.victorwads.job.vicflix.features.security.AuthHelper
@@ -22,7 +21,6 @@ class ShowListingActivity : BaseActivity() {
 
     private val layout by lazy { ListingActivityBinding.inflate(layoutInflater) }
     private val showsAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails) }
-    private val showsFavoritesAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails, false) }
     private val viewModel by lazy { ShowListingViewModel(this) }
     private val authHandler by lazy { AuthHelper(this) }
     private val canAuth by lazy { authHandler.isAvailable() }
@@ -33,10 +31,7 @@ class ShowListingActivity : BaseActivity() {
 
         bindViews()
         bindData()
-        val needsAuth = authHandler.handleAuth({ finish() }, { viewModel.loadMore() })
-        if (!needsAuth) {
-            viewModel.loadMore()
-        }
+        authHandler.handleAuth({ finish() }, { viewModel.loadMore() })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,14 +48,82 @@ class ShowListingActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings -> navigation.openPreferences()
-            R.id.favorite -> {
-                updateFavorite(item, !viewModel.favorite)
-                filterFavorites()
-            }
+            R.id.favorite -> updateFavorite(item, !viewModel.favorite)
             else -> return false
         }
         return true
     }
+
+    private fun bindViews() {
+        setContentView(layout.root)
+        layout.shows.adapter = showsAdapter
+        layout.shows.addOnScrollListener(
+            LoadMoreListener {
+                if (shouldAutoLoad()) viewModel.loadMore()
+            }
+        )
+        layout.root.layoutTransition = LayoutTransition()
+        layout.inputSearch.setOnEditorActionListener { _, action, key ->
+            if (
+                action == IME_ACTION_SEARCH ||
+                (key?.action == ACTION_DOWN && key?.keyCode == KEYCODE_ENTER)
+            ) {
+                search()
+                true
+            } else {
+                false
+            }
+        }
+        layout.clearSearch.setOnClickListener {
+            cleanSearch()
+        }
+    }
+
+    private fun bindData() {
+        viewModel.state.observe(this) {
+            when (it) {
+                is ShowListingStates.Error -> {}
+                is ShowListingStates.ShowsEnded -> autoScroll = false
+                is ShowListingStates.AddShows -> {
+                    title = getString(R.string.listing_title)
+                    showsAdapter.addItems(it.shows)
+                }
+                is ShowListingStates.Favorites -> {
+                    title = getString(R.string.favorites_title)
+                    showsAdapter.setItems(it.shows)
+                }
+                is ShowListingStates.SearchedShows -> {
+                    title = getString(R.string.listing_searching_title)
+                    showsAdapter.setItems(it.shows)
+                }
+                ShowListingStates.Loading -> {
+                    showsAdapter.clear()
+                }
+            }
+        }
+    }
+
+    private fun search() {
+        layout.clearSearch.visibility = View.VISIBLE
+        layout.inputSearch.apply {
+            if (text.isNullOrEmpty()) {
+                cleanSearch()
+            }
+            viewModel.search(text.toString())
+            clearFocus()
+            (getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
+                hideSoftInputFromWindow(windowToken, 0)
+            }
+        }
+    }
+
+    private fun cleanSearch() {
+        viewModel.search("")
+        layout.inputSearch.setText("")
+        layout.clearSearch.visibility = View.GONE
+    }
+
+    private fun shouldAutoLoad() = autoScroll && viewModel.state.value is ShowListingStates.AddShows
 
     private fun updateFavorite(item: MenuItem, value: Boolean) {
         viewModel.favorite = value
@@ -73,66 +136,4 @@ class ShowListingActivity : BaseActivity() {
             else View.VISIBLE
     }
 
-    private fun filterFavorites() {
-        if (viewModel.favorite) {
-            layout.shows.adapter = showsFavoritesAdapter
-        } else {
-            layout.shows.adapter = showsAdapter
-        }
-    }
-
-    private fun bindViews() {
-        setContentView(layout.root)
-        layout.shows.adapter = showsAdapter
-        layout.shows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView.canScrollVertically(1) && shouldAutoLoad()) {
-                    viewModel.loadMore()
-                }
-            }
-        })
-        layout.root.layoutTransition = LayoutTransition()
-        layout.inputSearch.setOnEditorActionListener { textView, _, _ ->
-            layout.clearSearch.visibility = View.VISIBLE
-            textView.apply {
-                search()
-                clearFocus()
-                (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.apply {
-                    hideSoftInputFromWindow(windowToken, 0)
-                }
-            }
-            true
-        }
-        layout.clearSearch.setOnClickListener {
-            layout.inputSearch.apply {
-                setText("")
-                search()
-            }
-            layout.clearSearch.visibility = View.GONE
-        }
-    }
-
-    private fun TextView.search() {
-        viewModel.search(text.toString())
-    }
-
-    private fun bindData() {
-        viewModel.state.observe(this) {
-            when (it) {
-                is ShowListingStates.AddShows -> addShows(it.shows)
-                is ShowListingStates.CleanAddShows -> addShows(it.shows, true)
-                is ShowListingStates.Favorites -> showsFavoritesAdapter.addItems(it.shows, true)
-                is ShowListingStates.Error -> {}
-                ShowListingStates.ShowsEnded -> {
-                    autoScroll = false
-                }
-            }
-        }
-    }
-
-    private fun addShows(it: List<Show>, clean: Boolean = false) {
-        showsAdapter.addItems(it, clean)
-    }
-
-    private fun shouldAutoLoad() = autoScroll && viewModel.state.value is ShowListingStates.AddShows
 }

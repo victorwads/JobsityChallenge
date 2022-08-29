@@ -4,9 +4,10 @@ import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 
 sealed class ShowListingStates {
 
-    data class CleanAddShows(val shows: List<Show>) : ShowListingStates()
+    data class SearchedShows(val shows: List<Show>) : ShowListingStates()
     data class AddShows(val shows: List<Show>) : ShowListingStates()
     data class Favorites(val shows: List<Show>) : ShowListingStates()
     data class Error(val error: String = "generic error") : ShowListingStates()
     object ShowsEnded : ShowListingStates()
+    object Loading : ShowListingStates()
 }

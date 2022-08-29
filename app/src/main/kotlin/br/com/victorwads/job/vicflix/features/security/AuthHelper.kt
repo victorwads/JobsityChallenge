@@ -23,10 +23,11 @@ class AuthHelper(val activity: FragmentActivity) {
             auth(onError, onSuccess)
             return true
         }
+        onSuccess()
         return false
     }
 
-    fun auth(onError: () -> Unit, onSuccess: () -> Unit) {
+    private fun auth(onError: () -> Unit, onSuccess: () -> Unit) {
         val config = BiometricPrompt.PromptInfo.Builder()
             .setTitle(activity.getString(R.string.security_request_title))
             .setSubtitle(activity.getString(R.string.security_request_subtitle))

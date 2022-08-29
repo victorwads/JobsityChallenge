@@ -9,51 +9,50 @@ import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
 class ShowsAdapter(
     private val inflater: LayoutInflater,
     private val onSelectShow: (Show) -> Unit,
-    private var autoFill: Boolean = true
 ) : RecyclerView.Adapter<ShowViewHolder>() {
 
-    private var shows: ArrayList<Show>? = null
+    private var shows: MutableList<Show>? = null
 
-    override fun getItemCount() = shows?.size
-        ?: LOADING_FILL.takeIf { autoFill }
-        ?: 0
+    override fun getItemCount() = shows?.size ?: LOADING_FILL
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ShowViewHolder(ListingShowItemBinding.inflate(inflater, parent, false))
 
-    override fun onBindViewHolder(holder: ShowViewHolder, position: Int) {
-        shows?.let {
-            holder.bindData(it[position], onSelectShow)
+    override fun onBindViewHolder(holder: ShowViewHolder, position: Int) = shows.let { items ->
+        if (items == null) {
+            holder.clear()
+        } else {
+            holder.bindData(items[position], onSelectShow)
         }
+        return@let
     }
 
-    fun startLoading() {
-        clear()
-        autoFill = true
-        notifyItemRangeInserted(0, itemCount)
-    }
-
-    fun clear() {
+    fun clear() = shows?.run {
         itemCount.let {
-            autoFill = false
             shows = null
-            notifyItemRangeRemoved(0, it)
+            notifyItemRangeRemoved(LOADING_FILL, it - LOADING_FILL)
+            notifyItemRangeChanged(0, LOADING_FILL)
         }
     }
 
-    fun addItems(items: List<Show>, clean: Boolean = false) {
-        if (clean) {
-            clear()
-        }
-        (shows ?: arrayListOf()).let { newList ->
-            newList.addAll(items)
-            if (autoFill && shows == null) {
-                shows = newList
-                notifyItemRangeChanged(0, LOADING_FILL)
-                notifyItemRangeInserted(LOADING_FILL - 1, newList.size - LOADING_FILL)
+    fun setItems(items: List<Show>) {
+        clear()
+        addItems(items)
+    }
+
+    fun addItems(items: List<Show>) {
+        shows.let { oldList ->
+            if (oldList == null) {
+                shows = items.toMutableList()
+                if (items.size > LOADING_FILL) {
+                    notifyItemRangeChanged(0, LOADING_FILL)
+                    notifyItemRangeInserted(LOADING_FILL - 1, items.size - LOADING_FILL)
+                } else {
+                    notifyDataSetChanged()
+                }
             } else {
-                shows = newList
-                notifyItemRangeInserted(newList.size, items.size)
+                oldList.addAll(items)
+                notifyItemRangeInserted(oldList.size, items.size)
             }
         }
     }

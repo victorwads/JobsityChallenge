@@ -15,6 +15,16 @@ class ShowViewHolder(
     private val favoritesRepository: FavoritesRepository = FavoritesRepository(layout.root.context)
 ) : RecyclerView.ViewHolder(layout.root) {
 
+    fun clear() = with(layout) {
+        favorite.visibility = View.GONE
+        poster.setImageDrawable(null)
+        root.apply {
+            contentDescription = context.getString(R.string.listing_loading)
+            showShimmer(true)
+            setOnClickListener(null)
+        }
+    }
+
     fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
         labelName.text = show.name
 
@@ -32,7 +42,7 @@ class ShowViewHolder(
             } else {
                 favoritesRepository.add(show)
             }
-            updateIcon(show, !isFavorite)
+            updateIcon(show)
         }
         loadPoster(show)
         updateIcon(show)
@@ -46,12 +56,9 @@ class ShowViewHolder(
         }
     }
 
-    private fun ListingShowItemBinding.updateIcon(
-        show: Show,
-        isFavorite: Boolean = favoritesRepository.isFavorite(show)
-    ) {
-        favorite.visibility = View.VISIBLE
-        favorite.setImageResource(
+    private fun ListingShowItemBinding.updateIcon(show: Show) = with(favorite) {
+        visibility = View.VISIBLE
+        setImageResource(
             if (favoritesRepository.isFavorite(show)) R.drawable.ic_favorite_filled
             else R.drawable.ic_favorite
         )

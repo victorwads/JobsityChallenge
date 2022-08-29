@@ -1,4 +1,7 @@
 <resources>
     <string name="listing_select_action_description">ver os detalhes do programa</string>
-    <string name="showdetails_serach_hint">Pesquisar</string>
+    <string name="listing_search_hint">Pesquisar</string>
+    <string name="listing_title">Shows</string>
+    <string name="listing_searching_title">Pesquisa de Shows</string>
+    <string name="listing_loading">Loading</string>
 </resources>

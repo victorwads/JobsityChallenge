@@ -25,13 +25,11 @@ class ShowsRepository(
 
     suspend fun getMoreShows(): List<Show>? = withContext(IO) {
         val page = currentPage
-        if (cache.hasPage(page)) {
-            cache.getPage(page)?.takeIf { it.isNotEmpty() }?.also {
+        try {
+            useCache(page)?.let {
                 currentPage++
                 return@withContext it
             }
-        }
-        try {
             val shows = service.loadPage(page).execute().body()?.also {
                 async { cache.savePage(page, it) }
             }
@@ -41,6 +39,10 @@ class ShowsRepository(
             // TODO Handle End and Errors
         }
     }
+
+    private fun useCache(page: Int): List<Show>? = if (cache.hasPage(page)) {
+        cache.getPage(page)?.takeIf { it.isNotEmpty() }
+    } else null
 
     fun clear() {
         currentPage = 0
