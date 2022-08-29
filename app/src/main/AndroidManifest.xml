@@ -21,19 +21,19 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".features.showdetails.view.ShowDetailsActivity"
             android:theme="@style/DetailsTheme" />
-
         <activity
             android:name=".features.showepisode.view.ShowEpisodeActivity"
             android:theme="@style/DetailsTheme" />
-
-        <activity android:name=".features.settings.view.SettingsActivity" />
+        <activity
+            android:name=".features.settings.view.SettingsActivity"
+            android:label="@string/settings_title" />
     </application>
 
 </manifest>

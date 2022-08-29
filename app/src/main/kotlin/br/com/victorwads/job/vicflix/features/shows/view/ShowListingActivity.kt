@@ -1,10 +1,14 @@
 package br.com.victorwads.job.vicflix.features.shows.view
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
@@ -14,8 +18,10 @@ import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewMod
 
 class ShowListingActivity : BaseActivity() {
 
+    private var favorite: Boolean = false
     private val layout by lazy { ListingActivityBinding.inflate(layoutInflater) }
     private val showsAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails) }
+    private val showsFavoritesAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails, false) }
     private val viewModel by lazy { ShowListingViewModel() }
 
     private var autoScroll = true
@@ -28,6 +34,45 @@ class ShowListingActivity : BaseActivity() {
         bindData()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        menu.findItem(R.id.favorite).let {
+            updateFavorite(it, favorite)
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.settings -> navigation.openPreferences()
+            R.id.favorite -> {
+                updateFavorite(item, !favorite)
+                filterFavorites()
+            }
+            else -> return false
+        }
+        return true
+    }
+
+    private fun updateFavorite(item: MenuItem, value: Boolean) {
+        favorite = value
+        item.setIcon(
+            if (favorite) R.drawable.ic_favorite_filled
+            else R.drawable.ic_favorite
+        )
+        layout.inputSearch.visibility =
+            if (favorite) View.GONE
+            else View.VISIBLE
+    }
+
+    private fun filterFavorites() {
+        if (favorite) {
+            layout.shows.adapter = showsFavoritesAdapter
+        } else {
+            layout.shows.adapter = showsAdapter
+        }
+    }
+
     private fun bindViews() {
         layout.shows.adapter = showsAdapter
         layout.shows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -37,6 +82,7 @@ class ShowListingActivity : BaseActivity() {
                 }
             }
         })
+        layout.root.layoutTransition = LayoutTransition()
         layout.inputSearch.setOnEditorActionListener { textView, _, _ ->
             textView.apply {
                 viewModel.search(text.toString())

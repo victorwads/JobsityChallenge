@@ -46,9 +46,9 @@ android {
             res.srcDirs = [
                     moduloDir + "commons/res/",
                     featuresDir + "shows/view/res/",
-                    featuresDir + "shows/view/res/",
                     featuresDir + "showepisode/view/res/",
                     featuresDir + "showdetails/view/res/",
+                    featuresDir + "favorites/view/res/",
                     featuresDir + "settings/view/res/",
             ]
         }

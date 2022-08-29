@@ -2,6 +2,9 @@ package br.com.victorwads.job.vicflix.features.showdetails.view
 
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import androidx.core.view.get
 import androidx.recyclerview.widget.ConcatAdapter
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
@@ -17,6 +20,7 @@ import com.squareup.picasso.Picasso
 
 class ShowDetailsActivity : BaseActivity() {
 
+    private var favorite: Boolean = false
     private lateinit var headerLayout: ShowdetailsHeaderBinding
     private val recyclerView by lazy { ShowdetailsActivityBinding.inflate(layoutInflater).root }
     private val showShortDetails by lazy { intent.getParcelableExtra<Show>(EXTRA_SHOW) }
@@ -31,6 +35,30 @@ class ShowDetailsActivity : BaseActivity() {
         } ?: return finish()
 
         bindView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        menu.findItem(R.id.favorite).let {
+            updateFavorite(it, favorite)
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favorite -> updateFavorite(item, !favorite)
+            else -> return false
+        }
+        return true
+    }
+
+    private fun updateFavorite(item: MenuItem, value: Boolean) {
+        favorite = value
+        item.setIcon(
+            if (favorite) R.drawable.ic_favorite_filled
+            else R.drawable.ic_favorite
+        )
     }
 
     private fun bindView() {

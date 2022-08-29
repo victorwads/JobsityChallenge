@@ -9,13 +9,14 @@ import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class ShowsAdapter(
     private val inflater: LayoutInflater,
-    private val onSelectShow: (Show) -> Unit
+    private val onSelectShow: (Show) -> Unit,
+    private var autoFill: Boolean = true
 ) : RecyclerView.Adapter<ShowsAdapter.ShowViewHolder>() {
 
-    var autoFill: Boolean = true
     private var shows: ArrayList<Show>? = null
 
     override fun getItemCount() = shows?.size
@@ -31,14 +32,17 @@ class ShowsAdapter(
         }
     }
 
-    fun clear(autoFill: Boolean = false) {
-        this.autoFill = autoFill
+    fun startLoading() {
+        clear()
+        autoFill = true
+        notifyItemRangeInserted(0, itemCount)
+    }
+
+    fun clear() {
         shows?.size?.let {
+            autoFill = false
             shows = null
-            notifyItemRangeRemoved(0, it)
-        }
-        if (autoFill) {
-            notifyItemRangeInserted(0, LOADING_FILL)
+            notifyItemRangeRemoved(0, itemCount)
         }
     }
 
