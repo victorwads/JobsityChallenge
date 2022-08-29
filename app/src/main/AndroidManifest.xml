@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VicFlix"
         tools:targetApi="31">
-
         <activity
             android:name=".features.shows.view.ShowListingActivity"
             android:exported="true">

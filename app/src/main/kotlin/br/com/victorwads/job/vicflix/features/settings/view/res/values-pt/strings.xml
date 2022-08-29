@@ -2,4 +2,6 @@
 <resources>
     <string name="settings_menu">Configurações</string>
     <string name="settings_title">Configurações</string>
+    <string name="settings_security">Segurança</string>
+    <string name="settings_security_biometrics">Ask for auth on start</string>
 </resources>
