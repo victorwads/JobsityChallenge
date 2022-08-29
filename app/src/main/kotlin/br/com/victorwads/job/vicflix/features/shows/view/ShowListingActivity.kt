@@ -32,17 +32,17 @@ class ShowListingActivity : BaseActivity() {
 
         bindViews()
         bindData()
-        handleAuth()
+        if (handleAuth()) {
+            viewModel.loadMore()
+        }
     }
 
-    private fun handleAuth() {
-        if (!canAuth) {
-            viewModel.loadMore()
-            return
-        }
-        if (authHandler.isEnabled()) {
+    private fun handleAuth(): Boolean {
+        if (canAuth && authHandler.isEnabled()) {
             authHandler.auth({ finish() }, { viewModel.loadMore() })
+            return false
         }
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
