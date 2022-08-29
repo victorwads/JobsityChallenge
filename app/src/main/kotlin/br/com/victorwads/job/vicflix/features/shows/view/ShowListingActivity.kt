@@ -12,6 +12,7 @@ import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
+import br.com.victorwads.job.vicflix.features.security.AuthHelper
 import br.com.victorwads.job.vicflix.features.shows.view.adapter.ShowsAdapter
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingStates
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
@@ -22,26 +23,35 @@ class ShowListingActivity : BaseActivity() {
     private val showsAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails) }
     private val showsFavoritesAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails, false) }
     private val viewModel by lazy { ShowListingViewModel(this) }
-
+    private val authHandler by lazy { AuthHelper(this) }
+    private val canAuth by lazy { authHandler.isAvailable() }
     private var autoScroll = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.root)
 
         bindViews()
         bindData()
+        handleAuth()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadFavorites()
+    private fun handleAuth() {
+        if (!canAuth) {
+            viewModel.loadMore()
+            return
+        }
+        if (authHandler.isEnabled()) {
+            authHandler.auth({ finish() }, { viewModel.loadMore() })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         menu.findItem(R.id.favorite).let {
             updateFavorite(it, viewModel.favorite)
+        }
+        if (!canAuth) {
+            menu.removeItem(R.id.settings)
         }
         return true
     }
@@ -78,6 +88,7 @@ class ShowListingActivity : BaseActivity() {
     }
 
     private fun bindViews() {
+        setContentView(layout.root)
         layout.shows.adapter = showsAdapter
         layout.shows.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

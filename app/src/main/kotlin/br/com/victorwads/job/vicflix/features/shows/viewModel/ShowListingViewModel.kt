@@ -25,10 +25,6 @@ class ShowListingViewModel(
             field = value
         }
 
-    init {
-        loadMore()
-    }
-
     fun loadFavorites() {
         state.value = ShowListingStates.Favorites(favoritesRepository.getAll().sortedBy { it.name })
     }

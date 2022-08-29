@@ -50,6 +50,7 @@ android {
                     featuresDir + "showdetails/view/res/",
                     featuresDir + "favorites/view/res/",
                     featuresDir + "settings/view/res/",
+                    featuresDir + "security/res/",
             ]
         }
     }
@@ -60,6 +61,7 @@ dependencies {
     // IO
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.biometric:biometric:1.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.picasso:picasso:2.8'
