@@ -52,10 +52,7 @@ class ShowDetailsViewModel(context: Context, val show: Show) : ViewModel() {
             observe(owner) {
                 if (it is ShowSeasonStates.Load) {
                     viewModelScope.launch(Main) {
-                        val episodes = seasonsRepository.getEpisodes(season)
-                        if (episodes == null) {
-                            return@launch
-                        }
+                        val episodes = seasonsRepository.getEpisodes(season) ?: return@launch
                         value = ShowSeasonStates.EpisodesLoaded(episodes)
                     }
                 }

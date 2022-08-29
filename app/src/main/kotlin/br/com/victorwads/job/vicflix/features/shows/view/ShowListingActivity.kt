@@ -99,19 +99,14 @@ class ShowListingActivity : BaseActivity() {
         }
     }
 
-    private fun shouldAutoLoad() = autoScroll &&
-            viewModel.state.value is ShowListingStates.AddShows
-
     private fun bindData() {
         viewModel.state.observe(this) {
             when (it) {
                 is ShowListingStates.AddShows -> addShows(it.shows)
                 is ShowListingStates.CleanAddShows -> addShows(it.shows, true)
                 is ShowListingStates.Favorites -> showsFavoritesAdapter.addItems(it.shows, true)
-                is ShowListingStates.Error -> hideLoading()
-                ShowListingStates.Loading -> showLoading()
+                is ShowListingStates.Error -> {}
                 ShowListingStates.ShowsEnded -> {
-                    hideLoading()
                     autoScroll = false
                 }
             }
@@ -120,10 +115,7 @@ class ShowListingActivity : BaseActivity() {
 
     private fun addShows(it: List<Show>, clean: Boolean = false) {
         showsAdapter.addItems(it, clean)
-        hideLoading()
     }
 
-    private fun showLoading() = layout.apply { progressBar.visibility = View.VISIBLE }
-
-    private fun hideLoading() = layout.apply { progressBar.visibility = View.GONE }
+    private fun shouldAutoLoad() = autoScroll && viewModel.state.value is ShowListingStates.AddShows
 }

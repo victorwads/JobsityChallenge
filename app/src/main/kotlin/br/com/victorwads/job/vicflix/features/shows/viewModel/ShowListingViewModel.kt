@@ -35,7 +35,6 @@ class ShowListingViewModel(
 
     fun loadMore() {
         viewModelScope.launch(Main) {
-            state.value = ShowListingStates.Loading
             val shows = repository.getMoreShows()
             if (shows == null) {
                 state.value = ShowListingStates.Error()
@@ -57,7 +56,6 @@ class ShowListingViewModel(
                 loadMore()
                 return@launch
             }
-            state.value = ShowListingStates.Loading
             val shows = repository.search(query)
             state.value = ShowListingStates.CleanAddShows(
                 (shows ?: arrayListOf())

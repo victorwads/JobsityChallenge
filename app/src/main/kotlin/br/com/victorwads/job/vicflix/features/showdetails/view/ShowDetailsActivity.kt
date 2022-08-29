@@ -70,9 +70,8 @@ class ShowDetailsActivity : BaseActivity() {
                     headerLayout = layout
                     bindLiveDate()
                 }
-            }, {
-                bindData(it)
-            }
+            },
+            this::bindData
         ).also { adapters.addAdapter(it) }
         recyclerView.adapter = adapters
     }

@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.commons.view.ShimmerCallBack
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class ShowsAdapter(
@@ -71,10 +71,8 @@ class ShowsAdapter(
             labelName.text = show.name
             show.image?.medium?.let {
                 Picasso.get().load(it).fit().centerCrop()
-                    .into(poster, object : Callback {
-                        override fun onSuccess() = root.hideShimmer()
-                        override fun onError(e: Exception?) = root.hideShimmer()
-                    })
+                    .error(R.drawable.ic_launcher_background)
+                    .into(poster, ShimmerCallBack(root))
             }
 
             root.apply {

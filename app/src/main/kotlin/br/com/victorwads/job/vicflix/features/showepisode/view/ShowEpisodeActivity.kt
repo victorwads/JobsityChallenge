@@ -4,11 +4,11 @@ import android.os.Bundle
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
+import br.com.victorwads.job.vicflix.commons.view.ShimmerCallBack
 import br.com.victorwads.job.vicflix.databinding.EpisodeActivityBinding
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class ShowEpisodeActivity : BaseActivity(), Callback {
+class ShowEpisodeActivity : BaseActivity() {
 
     private val layout by lazy { EpisodeActivityBinding.inflate(layoutInflater) }
     private val episodeDetails by lazy { intent.getParcelableExtra<Episode>(EXTRA_EPISODE) }
@@ -44,7 +44,7 @@ class ShowEpisodeActivity : BaseActivity(), Callback {
                     getString(R.string.episodedetails_poster_description, episode.number, episode.name)
                 Picasso.get().load(url).fit().centerCrop()
                     .error(R.drawable.ic_launcher_background)
-                    .into(poster, this@ShowEpisodeActivity)
+                    .into(poster, ShimmerCallBack(shimmer))
             } ?: shimmer.hideShimmer()
         }
     }
@@ -52,8 +52,4 @@ class ShowEpisodeActivity : BaseActivity(), Callback {
     companion object {
         const val EXTRA_EPISODE = "extra_episode"
     }
-
-    override fun onSuccess() = layout.shimmer.hideShimmer()
-
-    override fun onError(e: Exception?) = layout.shimmer.hideShimmer()
 }

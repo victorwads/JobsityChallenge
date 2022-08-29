@@ -10,7 +10,6 @@ import android.view.ViewGroup.MarginLayoutParams
 import androidx.appcompat.widget.AppCompatTextView
 import br.com.victorwads.job.vicflix.R
 
-
 class InfoLabelView : AppCompatTextView {
 
     var autofill: Boolean = false

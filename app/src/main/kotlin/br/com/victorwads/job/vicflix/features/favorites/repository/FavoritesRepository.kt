@@ -1,7 +1,7 @@
-package br.com.victorwads.job.vicflix.features.favorites.repository;
+package br.com.victorwads.job.vicflix.features.favorites.repository
 
 import android.content.Context
-import android.content.SharedPreferences;
+import android.content.SharedPreferences
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import com.google.gson.Gson
 
