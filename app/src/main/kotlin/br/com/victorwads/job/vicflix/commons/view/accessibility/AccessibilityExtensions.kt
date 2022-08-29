@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.commons.accessibility
+package br.com.victorwads.job.vicflix.commons.view.accessibility
 
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo

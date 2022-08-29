@@ -23,7 +23,7 @@
             app:shapeAppearanceOverlay="@style/ShowDetailsCoverOverlay"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        <br.com.victorwads.job.vicflix.commons.view.details.InfoLabelView
             android:id="@+id/genre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@id/poster"
             tools:text="@tools:sample/full_names" />
 
-        <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        <br.com.victorwads.job.vicflix.commons.view.details.InfoLabelView
             android:id="@+id/schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             app:layout_constraintTop_toBottomOf="@id/genre"
             tools:text="@tools:sample/full_names" />
 
-        <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+        <br.com.victorwads.job.vicflix.commons.view.details.InfoLabelView
             android:id="@+id/summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

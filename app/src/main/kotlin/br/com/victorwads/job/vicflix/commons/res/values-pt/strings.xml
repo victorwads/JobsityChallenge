@@ -1,3 +1,5 @@
 <resources>
     <string name="no_info">sem informação</string>
+    <string name="listing_loading">Carregando</string>
+    <string name="listing_search_hint">Pesquisar</string>
 </resources>

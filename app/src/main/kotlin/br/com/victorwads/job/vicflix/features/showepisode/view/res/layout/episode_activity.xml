@@ -26,7 +26,7 @@
             tools:srcCompat="@tools:sample/avatars" />
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+    <br.com.victorwads.job.vicflix.commons.view.details.InfoLabelView
         android:id="@+id/season"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/shimmer"
         tools:text="@tools:sample/full_names" />
 
-    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+    <br.com.victorwads.job.vicflix.commons.view.details.InfoLabelView
         android:id="@+id/number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@id/season"
         tools:text="@tools:sample/full_names" />
 
-    <br.com.victorwads.job.vicflix.commons.view.InfoLabelView
+    <br.com.victorwads.job.vicflix.commons.view.details.InfoLabelView
         android:id="@+id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.commons.view
+package br.com.victorwads.job.vicflix.commons.view.details
 
 import android.content.Context
 import android.graphics.text.LineBreaker

@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.commons.view
+package br.com.victorwads.job.vicflix.commons.view.listing
 
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Callback

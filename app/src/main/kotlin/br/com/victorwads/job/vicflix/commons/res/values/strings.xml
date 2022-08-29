@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name" translatable="false">VicFlix</string>
     <string name="no_info">no info</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="listing_loading">Loading</string>
+    <string name="listing_search_hint">Search</string>
+    <!-- Not Translated -->
+    <string name="app_name" translatable="false">VicFlix</string>
 </resources>

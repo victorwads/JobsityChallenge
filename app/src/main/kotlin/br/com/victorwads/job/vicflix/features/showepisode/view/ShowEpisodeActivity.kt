@@ -4,7 +4,7 @@ import android.os.Bundle
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
-import br.com.victorwads.job.vicflix.commons.view.ShimmerCallBack
+import br.com.victorwads.job.vicflix.commons.view.listing.ShimmerCallBack
 import br.com.victorwads.job.vicflix.databinding.EpisodeActivityBinding
 import com.squareup.picasso.Picasso
 

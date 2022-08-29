@@ -1,40 +1,33 @@
 package br.com.victorwads.job.vicflix.features.shows.view.adapter
 
+import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
+import android.view.ViewGroup
 import br.com.victorwads.job.vicflix.R
-import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
-import br.com.victorwads.job.vicflix.commons.view.ShimmerCallBack
+import br.com.victorwads.job.vicflix.commons.view.listing.ShimmerCallBack
 import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
 import br.com.victorwads.job.vicflix.features.favorites.repository.FavoritesRepository
+import br.com.victorwads.job.vicflix.commons.view.listing.ShimmerLoadingViewHolder
 import com.squareup.picasso.Picasso
 
-class ShowViewHolder(
-    private val layout: ListingShowItemBinding,
-    private val favoritesRepository: FavoritesRepository = FavoritesRepository(layout.root.context)
-) : RecyclerView.ViewHolder(layout.root) {
+class ShowViewHolder private constructor(private val layout: ListingShowItemBinding) : ShimmerLoadingViewHolder<Show>(
+    layout.root, layout.root, R.string.shows_listing_select_action_description
+) {
 
-    fun clear() = with(layout) {
+    constructor(inflater: LayoutInflater, parent: ViewGroup) : this(
+        ListingShowItemBinding.inflate(inflater, parent, false)
+    )
+
+    private val favoritesRepository: FavoritesRepository = FavoritesRepository(layout.root.context)
+
+    override fun clear() = with(layout) {
         favorite.visibility = View.GONE
         poster.setImageDrawable(null)
-        root.apply {
-            contentDescription = context.getString(R.string.listing_loading)
-            showShimmer(true)
-            setOnClickListener(null)
-        }
     }
 
-    fun bindData(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
+    override fun loaded(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
         labelName.text = show.name
-
-        root.apply {
-            showShimmer(true)
-            configAccessibility(R.string.listing_select_action_description)
-            setOnClickListener {
-                onSelectShow(show)
-            }
-        }
         favorite.setOnClickListener {
             val isFavorite = favoritesRepository.isFavorite(show)
             if (isFavorite) {

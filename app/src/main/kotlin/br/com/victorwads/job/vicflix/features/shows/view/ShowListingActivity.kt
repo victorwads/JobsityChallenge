@@ -12,15 +12,19 @@ import android.view.inputmethod.InputMethodManager
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
+import br.com.victorwads.job.vicflix.commons.view.listing.LoadMoreListener
+import br.com.victorwads.job.vicflix.commons.view.listing.LoaderListingAdapter
 import br.com.victorwads.job.vicflix.features.security.AuthHelper
-import br.com.victorwads.job.vicflix.features.shows.view.adapter.ShowsAdapter
+import br.com.victorwads.job.vicflix.features.shows.view.adapter.ShowViewHolder
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingStates
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
 
 class ShowListingActivity : BaseActivity() {
 
     private val layout by lazy { ListingActivityBinding.inflate(layoutInflater) }
-    private val showsAdapter by lazy { ShowsAdapter(layoutInflater, navigation::openShowDetails) }
+    private val showsAdapter by lazy {
+        LoaderListingAdapter(navigation::openShowDetails) { ShowViewHolder(layoutInflater, it) }
+    }
     private val viewModel by lazy { ShowListingViewModel(this) }
     private val authHandler by lazy { AuthHelper(this) }
     private val canAuth by lazy { authHandler.isAvailable() }
@@ -85,7 +89,7 @@ class ShowListingActivity : BaseActivity() {
                 is ShowListingStates.Error -> {}
                 is ShowListingStates.ShowsEnded -> autoScroll = false
                 is ShowListingStates.AddShows -> {
-                    title = getString(R.string.listing_title)
+                    title = getString(R.string.shows_listing_title)
                     showsAdapter.addItems(it.shows)
                 }
                 is ShowListingStates.Favorites -> {
@@ -93,7 +97,7 @@ class ShowListingActivity : BaseActivity() {
                     showsAdapter.setItems(it.shows)
                 }
                 is ShowListingStates.SearchedShows -> {
-                    title = getString(R.string.listing_searching_title)
+                    title = getString(R.string.shows_searching_title)
                     showsAdapter.setItems(it.shows)
                 }
                 ShowListingStates.Loading -> {

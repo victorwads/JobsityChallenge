@@ -1,7 +1,7 @@
 package br.com.victorwads.job.vicflix.features.showdetails.view.adapter
 
 import br.com.victorwads.job.vicflix.R
-import br.com.victorwads.job.vicflix.commons.accessibility.AccessibilityExtensions.Companion.configAccessibility
+import br.com.victorwads.job.vicflix.commons.view.accessibility.AccessibilityExtensions.Companion.configAccessibility
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
 import br.com.victorwads.job.vicflix.commons.view.Navigation

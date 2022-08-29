@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.features.shows.view
+package br.com.victorwads.job.vicflix.commons.view.listing
 
 import androidx.recyclerview.widget.RecyclerView
 
