@@ -27,19 +27,15 @@ class AuthHelper(val activity: FragmentActivity) {
     }
 
     fun auth(onError: () -> Unit, onSuccess: () -> Unit) {
-
-        BiometricPrompt.PromptInfo.Builder()
+        val config = BiometricPrompt.PromptInfo.Builder()
             .setTitle(activity.getString(R.string.security_request_title))
             .setSubtitle(activity.getString(R.string.security_request_subtitle))
             .setConfirmationRequired(false)
             .setAllowedAuthenticators(TYPES)
-            .build().let {
-                BiometricPrompt(
-                    activity,
-                    ContextCompat.getMainExecutor(activity),
-                    Handler(onError, onSuccess)
-                ).authenticate(it)
-            }
+            .build()
+
+        BiometricPrompt(activity, ContextCompat.getMainExecutor(activity), Handler(onError, onSuccess))
+            .authenticate(config)
     }
 
     private class Handler(
