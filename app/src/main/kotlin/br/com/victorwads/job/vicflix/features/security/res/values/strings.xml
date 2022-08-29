@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_security">Security</string>
-    <string name="settings_security_biometrics">Ask for auth on start</string>
+    <string name="security_settings_title">Security</string>
+    <string name="security_settings_description">Ask for auth on start</string>
+    <string name="security_request_title">Auth Required</string>
+    <string name="security_request_subtitle">Use your credentials</string>
 </resources>

@@ -10,20 +10,13 @@ class ShowsCachedRepository(context: Context) {
     private val preferences = context.getSharedPreferences(SHOWS_CACHE_STORE_KEY, Context.MODE_PRIVATE)
     private val transform = Gson()
 
-    private val lastSavedPage
-        get() = preferences.getInt(PAGE_COUNT_KEY, 0)
-
-    private val cacheDate
-        get() = preferences.getLong(CACHE_DATE_KEY, 0)
-
     fun hasPage(page: Int) = preferences.contains(PAGE_CACHE_KEY + page)
 
     fun getPage(page: Int): List<Show>? {
+        checkExpiration()
         if (hasPage(page)) {
             return preferences.getString(PAGE_CACHE_KEY + page, null)?.let {
                 transform.fromJson(it, Array<Show>::class.java).toList()
-            }.also {
-                checkExpiration()
             }
         }
         return null
@@ -45,14 +38,7 @@ class ShowsCachedRepository(context: Context) {
                 val today = Date().time
                 val expireDate = it + CACHE_EXPIRE_TIME_MILISECONDS
                 if (today > expireDate) {
-                    preferences.edit().apply {
-                        for (page in 0..lastSavedPage) {
-                            remove(PAGE_CACHE_KEY + page)
-                        }
-                        remove(PAGE_COUNT_KEY)
-                        remove(CACHE_DATE_KEY)
-                        apply()
-                    }
+                    clearCache()
                 }
             }
         } else {
@@ -60,6 +46,18 @@ class ShowsCachedRepository(context: Context) {
                 putLong(CACHE_DATE_KEY, Date().time)
                 apply()
             }
+        }
+    }
+
+    private fun clearCache() {
+        val lastSavedPage = preferences.getInt(PAGE_COUNT_KEY, 0)
+        preferences.edit().apply {
+            for (page in 0..lastSavedPage) {
+                remove(PAGE_CACHE_KEY + page)
+            }
+            remove(PAGE_COUNT_KEY)
+            remove(CACHE_DATE_KEY)
+            apply()
         }
     }
 

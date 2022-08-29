@@ -6,23 +6,33 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
+import br.com.victorwads.job.vicflix.R
 
 class AuthHelper(val activity: FragmentActivity) {
 
     private val biometricManager = BiometricManager.from(activity)
 
     fun isAvailable(): Boolean =
-        biometricManager.canAuthenticate(
-            Authenticators.BIOMETRIC_WEAK or Authenticators.BIOMETRIC_STRONG or Authenticators.DEVICE_CREDENTIAL
-        ) == BiometricManager.BIOMETRIC_SUCCESS
+        biometricManager.canAuthenticate(TYPES) == BiometricManager.BIOMETRIC_SUCCESS
+
+    fun isEnabled(): Boolean = PreferenceManager.getDefaultSharedPreferences(activity)
+        .getBoolean(CONFIG_KEY, false)
+
+    fun handleAuth(onError: () -> Unit, onSuccess: () -> Unit): Boolean {
+        if (isAvailable() && isEnabled()) {
+            auth(onError, onSuccess)
+            return true
+        }
+        return false
+    }
 
     fun auth(onError: () -> Unit, onSuccess: () -> Unit) {
 
         BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Auth Required")
-            .setSubtitle("Log in using your credentials")
+            .setTitle(activity.getString(R.string.security_request_title))
+            .setSubtitle(activity.getString(R.string.security_request_subtitle))
             .setConfirmationRequired(false)
-            .setAllowedAuthenticators(Authenticators.BIOMETRIC_WEAK or Authenticators.BIOMETRIC_STRONG or Authenticators.DEVICE_CREDENTIAL )
+            .setAllowedAuthenticators(TYPES)
             .build().let {
                 BiometricPrompt(
                     activity,
@@ -31,9 +41,6 @@ class AuthHelper(val activity: FragmentActivity) {
                 ).authenticate(it)
             }
     }
-
-    fun isEnabled(): Boolean = PreferenceManager.getDefaultSharedPreferences(activity)
-        .getBoolean(CONFIG_KEY, false)
 
     private class Handler(
         val onError: () -> Unit,
@@ -57,5 +64,8 @@ class AuthHelper(val activity: FragmentActivity) {
 
     companion object {
         private const val CONFIG_KEY = "need_auth"
+        private const val TYPES = Authenticators.DEVICE_CREDENTIAL or
+                Authenticators.BIOMETRIC_WEAK or
+                Authenticators.BIOMETRIC_STRONG
     }
 }

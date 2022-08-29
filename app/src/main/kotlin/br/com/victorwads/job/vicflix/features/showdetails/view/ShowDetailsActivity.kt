@@ -71,31 +71,29 @@ class ShowDetailsActivity : BaseActivity() {
                     bindLiveDate()
                 }
             },
-            this::bindData
+            { showShortDetails?.let { show -> bindData(it, show) } }
         ).also { adapters.addAdapter(it) }
         recyclerView.adapter = adapters
     }
 
-    private fun bindData(layout: ShowdetailsHeaderBinding) = layout.apply {
-        showShortDetails?.let { show ->
-            genre.text = show.genres?.joinToString()
-            summary.text = show.summary
+    private fun bindData(layout: ShowdetailsHeaderBinding, show: Show) = layout.apply {
+        genre.text = show.genres?.joinToString()
+        summary.text = show.summary
 
-            show.image?.original?.let { url ->
-                poster.contentDescription = getString(R.string.showdetails_poster_description, show.name)
-                Picasso.get().load(url).fit().centerCrop(Gravity.TOP)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(poster)
-            }
+        show.image?.original?.let { url ->
+            poster.contentDescription = getString(R.string.showdetails_poster_description, show.name)
+            Picasso.get().load(url).fit().centerCrop(Gravity.TOP)
+                .error(R.drawable.ic_launcher_background)
+                .into(poster)
+        }
 
-            show.schedule?.let {
-                schedule.text = if (it.time.isNullOrEmpty() && it.days.isNullOrEmpty()) {
-                    null
-                } else getString(
-                    R.string.showdetails_label_schedule_description,
-                    it.days?.joinToString(), it.time
-                )
-            }
+        show.schedule?.let {
+            schedule.text = if (it.time.isNullOrEmpty() && it.days.isNullOrEmpty()) {
+                null
+            } else getString(
+                R.string.showdetails_label_schedule_description,
+                it.days?.joinToString(), it.time
+            )
         }
     }
 
