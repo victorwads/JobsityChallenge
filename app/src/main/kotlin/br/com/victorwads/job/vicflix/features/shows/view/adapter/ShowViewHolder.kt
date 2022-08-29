@@ -27,10 +27,11 @@ class ShowViewHolder(
         }
         favorite.setOnClickListener {
             val isFavorite = favoritesRepository.isFavorite(show)
-            if (isFavorite)
+            if (isFavorite) {
                 favoritesRepository.remove(show)
-            else
+            } else {
                 favoritesRepository.add(show)
+            }
             updateIcon(show, !isFavorite)
         }
         loadPoster(show)
