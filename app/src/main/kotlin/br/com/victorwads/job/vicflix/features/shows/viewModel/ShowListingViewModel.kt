@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class ShowListingViewModel(
     context: Context,
     private val repository: ShowsRepository =
-        ShowsRepository(RetrofitProvider.instance.create(ShowsService::class.java))
+        ShowsRepository(RetrofitProvider.instance.create(ShowsService::class.java), context)
 ) : ViewModel() {
 
     private val favoritesRepository = FavoritesRepository(context)
