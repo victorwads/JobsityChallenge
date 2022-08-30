@@ -31,6 +31,7 @@
         <activity
             android:name=".features.showepisode.view.ShowEpisodeActivity"
             android:theme="@style/DetailsTheme" />
+        <activity android:name=".features.persons.view.PersonDetailsActivity" />
         <activity
             android:name=".features.settings.view.SettingsActivity"
             android:label="@string/settings_title" />

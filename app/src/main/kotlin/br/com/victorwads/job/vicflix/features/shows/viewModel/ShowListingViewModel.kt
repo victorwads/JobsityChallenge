@@ -66,11 +66,7 @@ class ShowListingViewModel(
                 return@launch
             }
             val shows = repository.search(query)
-            state.value = ShowListingStates.SearchedShows(
-                (shows ?: arrayListOf())
-                    .sortedBy { it.score }
-                    .map { it.show }
-            )
+            state.value = ShowListingStates.SearchedShows(shows ?: listOf())
         }
     }
 }

@@ -1,7 +1,7 @@
 package br.com.victorwads.job.vicflix.features.shows.repository
 
 import android.content.Context
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import com.google.gson.Gson
 import java.util.*
 

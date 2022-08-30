@@ -1,7 +1,7 @@
 package br.com.victorwads.job.vicflix.features.shows.repository
 
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
-import br.com.victorwads.job.vicflix.commons.repositories.model.ShowSearch
+import br.com.victorwads.job.vicflix.features.shows.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.ShowSearch
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

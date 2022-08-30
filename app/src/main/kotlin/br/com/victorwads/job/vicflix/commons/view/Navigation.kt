@@ -3,7 +3,8 @@ package br.com.victorwads.job.vicflix.commons.view
 import android.app.Activity
 import android.content.Intent
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
+import br.com.victorwads.job.vicflix.features.persons.view.PersonDetailsActivity
 import br.com.victorwads.job.vicflix.features.settings.view.SettingsActivity
 import br.com.victorwads.job.vicflix.features.showdetails.view.ShowDetailsActivity
 import br.com.victorwads.job.vicflix.features.showdetails.view.ShowDetailsActivity.Companion.EXTRA_SHOW
@@ -26,5 +27,9 @@ class Navigation(val activity: Activity) {
 
     fun openPreferences() = activity.startActivity(
         Intent(activity, SettingsActivity::class.java)
+    )
+
+    fun openPersonListing() = activity.startActivity(
+        Intent(activity, PersonDetailsActivity::class.java)
     )
 }

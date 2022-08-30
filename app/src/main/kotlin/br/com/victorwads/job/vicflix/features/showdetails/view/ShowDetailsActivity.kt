@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.ConcatAdapter
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import br.com.victorwads.job.vicflix.commons.view.BaseActivity
 import br.com.victorwads.job.vicflix.databinding.ShowdetailsActivityBinding
 import br.com.victorwads.job.vicflix.databinding.ShowdetailsHeaderBinding

@@ -7,6 +7,11 @@
         android:icon="@drawable/ic_favorite_filled"
         android:title="@string/favorites_menu" />
 
+    <item android:id="@+id/person"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_persons"
+        android:title="@string/personinfo_title" />
+
     <item android:id="@+id/settings"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_settings"

@@ -7,12 +7,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import br.com.victorwads.job.vicflix.R
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import br.com.victorwads.job.vicflix.commons.view.listing.BaseListingActivity
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
 import br.com.victorwads.job.vicflix.commons.view.listing.LoaderListingAdapter
 import br.com.victorwads.job.vicflix.features.security.AuthHelper
-import br.com.victorwads.job.vicflix.features.shows.view.adapter.ShowViewHolder
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingStates
 import br.com.victorwads.job.vicflix.features.shows.viewModel.ShowListingViewModel
 
@@ -48,6 +47,7 @@ class ShowListingActivity : BaseListingActivity<Show>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings -> navigation.openPreferences()
+            R.id.person -> navigation.openPersonListing()
             R.id.favorite -> updateFavoriteViews(item, !viewModel.favorite)
             else -> return false
         }
@@ -56,7 +56,7 @@ class ShowListingActivity : BaseListingActivity<Show>() {
 
     override fun onCreateViewHolder(parent: ViewGroup) = ShowViewHolder(layoutInflater, parent)
 
-    override fun onSelectItem(show: Show) = navigation.openShowDetails(show)
+    override fun onSelectItem(item: Show) = navigation.openShowDetails(item)
 
     private fun bindViews() {
         setContentView(layout.root)

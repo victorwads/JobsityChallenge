@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="personinfo_title">Pessoas</string>
+    <string name="persons_listing_select_action_description">ver informações da pessoa</string>
+</resources>

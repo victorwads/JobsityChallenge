@@ -2,7 +2,7 @@ package br.com.victorwads.job.vicflix.features.showdetails.repository
 
 import br.com.victorwads.job.vicflix.commons.repositories.model.Episode
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 

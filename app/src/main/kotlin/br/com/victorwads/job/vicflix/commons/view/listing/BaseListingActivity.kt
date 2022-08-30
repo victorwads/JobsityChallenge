@@ -52,6 +52,6 @@ abstract class BaseListingActivity<Model> : BaseActivity(), LoaderListingAdapter
     }
 
     final override fun onScrollEnded() {
-        if (viewModel.hasMorePages()) viewModel.loadMore()
+        if (viewModel.hasMorePages) viewModel.loadMore()
     }
 }

@@ -1,6 +1,6 @@
 package br.com.victorwads.job.vicflix.features.shows.viewModel
 
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 
 sealed class ShowListingStates {
 

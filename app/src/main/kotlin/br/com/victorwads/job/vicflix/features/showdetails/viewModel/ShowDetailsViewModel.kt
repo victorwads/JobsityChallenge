@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.victorwads.job.vicflix.commons.repositories.model.Season
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import br.com.victorwads.job.vicflix.commons.repositories.retrofit.RetrofitProvider
 import br.com.victorwads.job.vicflix.features.favorites.repository.FavoritesRepository
 import br.com.victorwads.job.vicflix.features.showdetails.repository.SeasonsRepository

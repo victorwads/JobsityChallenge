@@ -1,10 +1,10 @@
-package br.com.victorwads.job.vicflix.features.shows.view.adapter
+package br.com.victorwads.job.vicflix.features.shows.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.victorwads.job.vicflix.R
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import br.com.victorwads.job.vicflix.commons.view.listing.ShimmerCallBack
 import br.com.victorwads.job.vicflix.databinding.ShowsListingItemBinding
 import br.com.victorwads.job.vicflix.features.favorites.repository.FavoritesRepository
@@ -26,19 +26,19 @@ class ShowViewHolder private constructor(private val layout: ShowsListingItemBin
         poster.setImageDrawable(null)
     }
 
-    override fun loaded(show: Show, onSelectShow: (Show) -> Unit) = with(layout) {
-        labelName.text = show.name
+    override fun loaded(data: Show, onSelectItem: (Show) -> Unit) = with(layout) {
+        labelName.text = data.name
         favorite.setOnClickListener {
-            val isFavorite = favoritesRepository.isFavorite(show)
+            val isFavorite = favoritesRepository.isFavorite(data)
             if (isFavorite) {
-                favoritesRepository.remove(show)
+                favoritesRepository.remove(data)
             } else {
-                favoritesRepository.add(show)
+                favoritesRepository.add(data)
             }
-            updateIcon(show)
+            updateIcon(data)
         }
-        loadPoster(show)
-        updateIcon(show)
+        loadPoster(data)
+        updateIcon(data)
     }
 
     private fun ShowsListingItemBinding.loadPoster(show: Show) {

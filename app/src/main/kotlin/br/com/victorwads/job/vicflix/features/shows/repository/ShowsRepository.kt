@@ -1,8 +1,7 @@
 package br.com.victorwads.job.vicflix.features.shows.repository
 
 import android.content.Context
-import br.com.victorwads.job.vicflix.commons.repositories.model.Show
-import br.com.victorwads.job.vicflix.commons.repositories.model.ShowSearch
+import br.com.victorwads.job.vicflix.features.shows.model.Show
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -15,9 +14,11 @@ class ShowsRepository(
     private val cache = ShowsCachedRepository(context)
     var currentPage = 0
 
-    suspend fun search(query: String): List<ShowSearch>? = withContext(IO) {
+    suspend fun search(query: String): List<Show>? = withContext(IO) {
         try {
-            service.search(query).execute().body() ?: listOf()
+            service.search(query).execute().body()
+                ?.sortedBy { it.score }
+                ?.map { it.show }
         } finally {
             // TODO Handle End and Errors
         }

@@ -1,4 +1,4 @@
-package br.com.victorwads.job.vicflix.commons.repositories.model
+package br.com.victorwads.job.vicflix.features.shows.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
