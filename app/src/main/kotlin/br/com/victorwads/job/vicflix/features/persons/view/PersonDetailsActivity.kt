@@ -3,6 +3,7 @@ package br.com.victorwads.job.vicflix.features.persons.view
 import android.animation.LayoutTransition
 import android.os.Bundle
 import android.view.ViewGroup
+import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.view.listing.BaseListingActivity
 import br.com.victorwads.job.vicflix.commons.view.listing.LoaderListingAdapter
 import br.com.victorwads.job.vicflix.databinding.ListingActivityBinding
@@ -31,6 +32,7 @@ class PersonDetailsActivity : BaseListingActivity<Person>() {
     }
 
     private fun bindViews() {
+        title = getString(R.string.personinfo_title)
         setContentView(layout.root)
         layout.root.layoutTransition = LayoutTransition()
         bindSearchViews()
