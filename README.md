@@ -1,30 +1,30 @@
 # Run Project
 
-To run the project use android studio or use terminal with follow commands:
+To run the project use android studio or use terminal with follow commands.
 
-To run on any device connected
+To run on any device connected:
 ```bash
-// unix
+# unix
 ./gradlew installDebug
-// windows
+# windows
 ./gradlew.bat installDebug
 ```
 
-To generete apks (debug and release)
+To generate apks (debug and release):
 ```bash
-// unix
+# unix
 ./gradlew assemble
-// windows
+# windows
 ./gradlew.bat assemble
 ```
 
-# File organization
+## File organization
 
 - commons - Common classes and resources
-- features - features classes and resources separeted by folder
-  - somefeature
+- features - features classes and resources separated by folder
+  - some_feature
     - model - Feature data models
     - repository - Feature repositories: persistence, requests, etc.
     - view
-      - res - Android Resouce Files, configured on app build.gradle for each feature
+      - res - Android Resource Files, configured on app build.gradle for each feature
     - viewModel - feature activities viewModel(s)
