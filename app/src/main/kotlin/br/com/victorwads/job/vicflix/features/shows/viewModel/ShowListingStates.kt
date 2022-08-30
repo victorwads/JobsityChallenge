@@ -8,6 +8,5 @@ sealed class ShowListingStates {
     data class AddShows(val shows: List<Show>) : ShowListingStates()
     data class Favorites(val shows: List<Show>) : ShowListingStates()
     data class Error(val error: String = "generic error") : ShowListingStates()
-    object ShowsEnded : ShowListingStates()
     object Loading : ShowListingStates()
 }

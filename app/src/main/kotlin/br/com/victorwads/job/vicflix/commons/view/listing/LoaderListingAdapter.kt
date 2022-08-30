@@ -4,21 +4,31 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class LoaderListingAdapter<Model>(
-    private val onSelectItem: (Model) -> Unit,
-    private val onCreateViewHolder: (parent: ViewGroup) -> ShimmerLoadingViewHolder<Model>
+    recyclerView: RecyclerView,
+    private val eventsCallback: EventsCallback<Model>,
+    var autoScroll: Boolean = true
 ) : RecyclerView.Adapter<ShimmerLoadingViewHolder<Model>>() {
+
+    init {
+        recyclerView.adapter = this
+        recyclerView.addOnScrollListener(
+            LoadMoreListener {
+            if (autoScroll && items != null) eventsCallback.onScrollEnded()
+        }
+        )
+    }
 
     private var items: MutableList<Model>? = null
 
     override fun getItemCount() = items?.size ?: LOADING_FILL
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = onCreateViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = eventsCallback.onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: ShimmerLoadingViewHolder<Model>, position: Int) = items.let {
         if (it == null) {
             holder.bindLoading()
         } else {
-            holder.bindData(it[position], onSelectItem)
+            holder.bindData(it[position], eventsCallback::onSelectItem)
         }
         return@let
     }
@@ -51,6 +61,12 @@ class LoaderListingAdapter<Model>(
                 notifyItemRangeInserted(oldList.size, items.size)
             }
         }
+    }
+
+    interface EventsCallback<Model> {
+        fun onCreateViewHolder(parent: ViewGroup): ShimmerLoadingViewHolder<Model>
+        fun onSelectItem(item: Model): Unit
+        fun onScrollEnded(): Unit
     }
 
     companion object {

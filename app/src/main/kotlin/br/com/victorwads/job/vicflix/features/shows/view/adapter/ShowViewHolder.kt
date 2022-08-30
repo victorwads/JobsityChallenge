@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import br.com.victorwads.job.vicflix.R
 import br.com.victorwads.job.vicflix.commons.repositories.model.Show
 import br.com.victorwads.job.vicflix.commons.view.listing.ShimmerCallBack
-import br.com.victorwads.job.vicflix.databinding.ListingShowItemBinding
+import br.com.victorwads.job.vicflix.databinding.ShowsListingItemBinding
 import br.com.victorwads.job.vicflix.features.favorites.repository.FavoritesRepository
 import br.com.victorwads.job.vicflix.commons.view.listing.ShimmerLoadingViewHolder
 import com.squareup.picasso.Picasso
 
-class ShowViewHolder private constructor(private val layout: ListingShowItemBinding) : ShimmerLoadingViewHolder<Show>(
+class ShowViewHolder private constructor(private val layout: ShowsListingItemBinding) : ShimmerLoadingViewHolder<Show>(
     layout.root, layout.root, R.string.shows_listing_select_action_description
 ) {
 
     constructor(inflater: LayoutInflater, parent: ViewGroup) : this(
-        ListingShowItemBinding.inflate(inflater, parent, false)
+        ShowsListingItemBinding.inflate(inflater, parent, false)
     )
 
     private val favoritesRepository: FavoritesRepository = FavoritesRepository(layout.root.context)
@@ -41,7 +41,7 @@ class ShowViewHolder private constructor(private val layout: ListingShowItemBind
         updateIcon(show)
     }
 
-    private fun ListingShowItemBinding.loadPoster(show: Show) {
+    private fun ShowsListingItemBinding.loadPoster(show: Show) {
         show.image?.medium?.let {
             Picasso.get().load(it).fit().centerCrop()
                 .error(R.drawable.ic_launcher_background)
@@ -49,7 +49,7 @@ class ShowViewHolder private constructor(private val layout: ListingShowItemBind
         }
     }
 
-    private fun ListingShowItemBinding.updateIcon(show: Show) = with(favorite) {
+    private fun ShowsListingItemBinding.updateIcon(show: Show) = with(favorite) {
         visibility = View.VISIBLE
         setImageResource(
             if (favoritesRepository.isFavorite(show)) R.drawable.ic_favorite_filled

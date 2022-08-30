@@ -31,13 +31,13 @@
         android:src="@drawable/ic_search_clean"
         android:tint="?attr/colorBackgroundFloating"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/shows"
+        app:layout_constraintBottom_toBottomOf="@+id/input_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/shows"
+        android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -49,6 +49,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:spanCount="3"
         tools:itemCount="250"
-        tools:listitem="@layout/listing_show_item" />
+        tools:listitem="@layout/shows_listing_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

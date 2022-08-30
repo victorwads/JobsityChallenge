@@ -37,5 +37,4 @@ abstract class ShimmerLoadingViewHolder<Model>(
         }
         loaded(data, onSelectItem)
     }
-
 }
