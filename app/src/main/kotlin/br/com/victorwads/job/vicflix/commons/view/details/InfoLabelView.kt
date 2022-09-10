@@ -14,6 +14,7 @@ class InfoLabelView : AppCompatTextView {
 
     var autofill: Boolean = false
     var label: String = EMPTY_STRING
+    private var text: String = getText().toString()
 
     constructor(context: Context) : this(context, null)
 
@@ -22,8 +23,6 @@ class InfoLabelView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(context, attrs)
     }
-
-    private var text: String = getText().toString()
 
     private fun init(context: Context, attrs: AttributeSet?) {
         focusable = View.FOCUSABLE

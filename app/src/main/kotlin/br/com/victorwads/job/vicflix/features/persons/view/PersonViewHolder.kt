@@ -20,6 +20,7 @@ class PersonViewHolder private constructor(private val layout: PersonsListingIte
 
     override fun clear() = with(layout) {
         poster.setImageDrawable(null)
+        labelName.text = ""
     }
 
     override fun loaded(data: Person, onSelectItem: (Person) -> Unit) = with(layout) {
