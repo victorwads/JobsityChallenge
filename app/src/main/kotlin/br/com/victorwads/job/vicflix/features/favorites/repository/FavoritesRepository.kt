@@ -2,13 +2,11 @@ package br.com.victorwads.job.vicflix.features.favorites.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import br.com.victorwads.job.vicflix.commons.repositories.BasePreferencesRepository
 import br.com.victorwads.job.vicflix.features.shows.model.Show
-import com.google.gson.Gson
+import java.util.*
 
-class FavoritesRepository(context: Context) {
-
-    private val preferences = context.getSharedPreferences(FAVORITES_STORE_KEY, Context.MODE_PRIVATE)
-    private val transform = Gson()
+class FavoritesRepository(context: Context) : BasePreferencesRepository(context, FAVORITES_STORE_KEY) {
 
     init {
         if (favoritesIndexCache == null) {
@@ -25,15 +23,20 @@ class FavoritesRepository(context: Context) {
         putString(FAVORITES_INDEX_KEY, transform.toJson(index))
     }
 
-    private fun get(id: Int): Show = preferences.run {
+    private fun get(id: Int): Show? = preferences.run {
         val key = SHOW_KEY + id
         if (preferences.contains(key)) {
-            preferences.getString(key, null)?.let {
-                transform.fromJson(it, Show::class.java)
-            } ?: throw FavoritesCorruptedException()
+            try {
+                preferences.getString(key, null)?.let {
+                    transform.fromJson(decrypt(it), Show::class.java)
+                }
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+                remove(id)
+                null
+            }
         } else {
-            remove(id)
-            throw FavoritesCorruptedException()
+            null
         }
     }
 
@@ -43,7 +46,7 @@ class FavoritesRepository(context: Context) {
 
     fun add(show: Show) = preferences.edit().apply {
         index.add(show.id)
-        putString(getKey(show.id), transform.toJson(show))
+        putString(getKey(show.id), encrypt(transform.toJson(show)))
         saveIndex()
         apply()
         favoritesCache?.add(show)
@@ -59,9 +62,9 @@ class FavoritesRepository(context: Context) {
         favoritesCache?.removeIf { it.id == id }
     }
 
-    fun getAll(): List<Show> = favoritesCache ?: index.map {
+    fun getAll(): List<Show> = favoritesCache ?: index.mapNotNull {
         get(it)
-    }.also { favoritesCache = it.toMutableList() }
+    }.sortedBy { it.name }.toMutableList().also { favoritesCache = it }
 
     private class FavoritesCorruptedException : Throwable()
     private class FavoritesUnexpectedException : Throwable()

@@ -34,7 +34,7 @@ class ShowListingViewModel(
         viewModelScope.launch(Main) {
             repository.clear()
             state.value = ShowListingStates.Favorites(
-                favoritesRepository.getAll().sortedBy { it.name }
+                favoritesRepository.getAll()
             )
         }
     }
