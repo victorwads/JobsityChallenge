@@ -33,7 +33,7 @@ class ShowViewHolder private constructor(private val layout: ShowsListingItemBin
             if (isFavorite) {
                 favoritesRepository.remove(data)
             } else {
-                favoritesRepository.add(data)
+                favoritesRepository.save(data, data.id)
             }
             updateIcon(data)
         }

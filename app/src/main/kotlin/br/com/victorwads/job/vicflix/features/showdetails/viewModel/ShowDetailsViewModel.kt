@@ -23,7 +23,7 @@ class ShowDetailsViewModel(context: Context, val show: Show) : ViewModel() {
         get() = favoritesRepository.isFavorite(show)
         set(value) {
             if (value) {
-                favoritesRepository.add(show)
+                favoritesRepository.save(show, show.id)
             } else {
                 favoritesRepository.remove(show)
             }

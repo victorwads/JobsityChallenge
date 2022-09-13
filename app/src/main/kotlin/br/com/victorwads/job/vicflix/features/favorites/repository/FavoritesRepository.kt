@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import br.com.victorwads.job.vicflix.commons.repositories.BasePreferencesRepository
 import br.com.victorwads.job.vicflix.features.shows.model.Show
+import com.google.gson.JsonSyntaxException
 import java.util.*
 
-class FavoritesRepository(context: Context) : BasePreferencesRepository(context, FAVORITES_STORE_KEY) {
+class FavoritesRepository(context: Context) : BasePreferencesRepository<Show>(context, FAVORITES_STORE_KEY) {
 
     init {
         if (favoritesIndexCache == null) {
@@ -23,50 +24,53 @@ class FavoritesRepository(context: Context) : BasePreferencesRepository(context,
         putString(FAVORITES_INDEX_KEY, transform.toJson(index))
     }
 
-    private fun get(id: Int): Show? = preferences.run {
+    override fun get(id: Int): Show? {
         val key = SHOW_KEY + id
         if (preferences.contains(key)) {
             try {
-                preferences.getString(key, null)?.let {
+                return preferences.getString(key, null)?.let {
                     transform.fromJson(decrypt(it), Show::class.java)
                 }
-            } catch (e: IllegalArgumentException) {
-                e.printStackTrace()
+            } catch (_: JsonSyntaxException) {
                 remove(id)
-                null
+            } catch (_: IllegalArgumentException) {
+                remove(id)
             }
-        } else {
-            null
         }
+        return null
     }
 
     private fun getKey(id: Int) = SHOW_KEY + id.toString()
 
     fun isFavorite(show: Show): Boolean = index.contains(show.id)
 
-    fun add(show: Show) = preferences.edit().apply {
-        index.add(show.id)
-        putString(getKey(show.id), encrypt(transform.toJson(show)))
-        saveIndex()
-        apply()
-        favoritesCache?.add(show)
+    public override fun save(item: Show, id: Int) {
+        preferences.edit().apply {
+            index.add(id)
+            putString(getKey(id), encrypt(transform.toJson(item)))
+            saveIndex()
+            apply()
+            favoritesCache?.add(item)
+        }
     }
 
     fun remove(show: Show) = remove(show.id)
 
-    fun remove(id: Int) = preferences.edit().apply {
-        index.remove(id)
-        remove(getKey(id))
-        saveIndex()
-        apply()
-        favoritesCache?.removeIf { it.id == id }
+    override fun remove(id: Int) {
+        preferences.edit().apply {
+            index.remove(id)
+            remove(getKey(id))
+            saveIndex()
+            apply()
+            favoritesCache?.removeIf { it.id == id }
+        }
     }
 
-    fun getAll(): List<Show> = favoritesCache ?: index.mapNotNull {
-        get(it)
-    }.sortedBy { it.name }.toMutableList().also { favoritesCache = it }
+    fun getAll(): List<Show> = favoritesCache ?: index
+        .mapNotNull { get(it) }
+        .sortedBy { it.name }
+        .also { favoritesCache = it.toMutableList() }
 
-    private class FavoritesCorruptedException : Throwable()
     private class FavoritesUnexpectedException : Throwable()
 
     companion object {

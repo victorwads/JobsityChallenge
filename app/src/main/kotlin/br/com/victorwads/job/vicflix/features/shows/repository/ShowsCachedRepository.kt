@@ -6,33 +6,37 @@ import br.com.victorwads.job.vicflix.features.shows.model.Show
 import java.lang.IllegalArgumentException
 import java.util.Date
 
-class ShowsCachedRepository(context: Context) : BasePreferencesRepository(context, SHOWS_CACHE_STORE_KEY) {
+class ShowsCachedRepository(context: Context) : BasePreferencesRepository<List<Show>>(context, SHOWS_CACHE_STORE_KEY) {
 
     fun hasPage(page: Int) = preferences.contains(PAGE_CACHE_KEY + page)
 
-    fun getPage(page: Int): List<Show>? {
+    override fun get(id: Int): List<Show>? {
         checkExpiration()
-        if (hasPage(page)) {
+        if (hasPage(id)) {
             try {
-                return preferences.getString(PAGE_CACHE_KEY + page, null)?.let {
+                return preferences.getString(PAGE_CACHE_KEY + id, null)?.let {
                     transform.fromJson(decrypt(it), Array<Show>::class.java).toList()
                 }
             } catch (_: IllegalArgumentException) {
-                preferences.edit().apply {
-                    remove(PAGE_CACHE_KEY + page)
-                    apply()
-                }
+                remove(id)
             }
         }
         return null
     }
 
-    fun savePage(page: Int, shows: List<Show>) {
-        if (shows.isEmpty()) return
+    override fun save(item: List<Show>, id: Int) {
+        if (item.isEmpty()) return
         checkExpiration()
         preferences.edit().apply {
-            putInt(PAGE_COUNT_KEY, page)
-            putString(PAGE_CACHE_KEY + page, encrypt(transform.toJson(shows)))
+            putInt(PAGE_COUNT_KEY, id)
+            putString(PAGE_CACHE_KEY + id, encrypt(transform.toJson(item)))
+            apply()
+        }
+    }
+
+    override fun remove(id: Int) {
+        preferences.edit().apply {
+            remove(PAGE_CACHE_KEY + id)
             apply()
         }
     }
