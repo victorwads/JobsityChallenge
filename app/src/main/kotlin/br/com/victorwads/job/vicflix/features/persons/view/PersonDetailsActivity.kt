@@ -41,7 +41,7 @@ class PersonDetailsActivity : BaseListingActivity<Person>() {
     private fun bindData() {
         viewModel.state.observe(this) {
             when (it) {
-                PersonListingStates.Error -> TODO()
+                PersonListingStates.Error -> {} // TODO
                 PersonListingStates.Loading -> personAdapter.clear()
                 is PersonListingStates.SearchedPersons -> personAdapter.setItems(it.persons)
             }
